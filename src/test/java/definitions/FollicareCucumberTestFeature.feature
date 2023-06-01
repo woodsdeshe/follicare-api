@@ -35,3 +35,8 @@ Feature: Model Functionality
     Given a user has a specific hair disorder and zip code
     When the user searches for specialists by hair disorder and zip code
     Then a list of specialists specializing in the hair disorder and located in the zip code should be returned
+
+  Scenario: Retrieving Resources by Topic
+    Given a user provides a specific topic name
+    When the user searches for resources by topic
+    Then a list of resources related to that topic should be returned
