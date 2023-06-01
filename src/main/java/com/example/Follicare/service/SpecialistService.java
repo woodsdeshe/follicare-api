@@ -3,6 +3,7 @@ package com.example.Follicare.service;
 import com.example.Follicare.exceptions.NotFoundException;
 import com.example.Follicare.model.Specialist;
 import com.example.Follicare.repository.SpecialistRepository;
+import com.example.Follicare.seed.SpecialistData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ import java.util.List;
 public class SpecialistService {
 
     private SpecialistRepository specialistRepository;
+
 
     @Autowired
     public void setSpecialistRepository(SpecialistRepository specialistRepository) {

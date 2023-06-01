@@ -2,6 +2,7 @@ package com.example.Follicare.controller;
 
 import com.example.Follicare.model.Specialist;
 import com.example.Follicare.service.SpecialistService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,7 +13,9 @@ import java.util.List;
 @RequestMapping("/api/specialists")
 public class SpecialistController {
 
+    @Autowired
     private SpecialistService specialistService;
+
 
     //Functionality: Returns a list of all specialists
     // Path: http://localhost:8080/api/specialists
