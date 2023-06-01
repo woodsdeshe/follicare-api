@@ -37,15 +37,15 @@ public class SpecialistService {
         }
     }
 
-    public Optional<Specialist> getSpecialistBySpecialty(String specialty) {
+    public List<Specialist> getSpecialistBySpecialty(String specialty) {
         // Search for specialist by specialty
-        Optional<Specialist> specialist = specialistRepository.findSpecialistBySpecialty(specialty);
+        List<Specialist> specialist = specialistRepository.findAllBySpecialty(specialty);
         // If specialist is found, return the specialists' data
-        if (specialist.isPresent()) {
-            return specialist;
-        } else {
+        if (specialist.isEmpty()) {
             // Throw an error if the specialist is not found in the database
             throw new NotFoundException("Specialist with " + specialty + " not found");
+        } else {
+            return specialist;
         }
     }
 }
