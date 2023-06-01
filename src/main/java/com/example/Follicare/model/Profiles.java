@@ -29,6 +29,10 @@ public class Profiles {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "favorites_id")
+    private Favorites favorites;
+
     public User getUser() {
         return user;
     }

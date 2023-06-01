@@ -17,6 +17,18 @@ public class Favorites {
     @JoinColumn(name = "specialist_id")
     private Specialist specialist;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "profile_id")
+    private Profiles profiles;
+
+    public Profiles getProfiles() {
+        return profiles;
+    }
+
+    public void setProfiles(Profiles profiles) {
+        this.profiles = profiles;
+    }
+
     public Specialist getSpecialist() {
         return specialist;
     }
