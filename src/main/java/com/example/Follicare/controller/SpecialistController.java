@@ -28,7 +28,6 @@ public class SpecialistController {
 
     // Functionality: Returns a list of specialists by specialty
     // Path: "http://localhost:8080/api/specialists?hairDisorder={hairDisorder}";
-
     @GetMapping(params = "specialty")
     public List<Specialist> getSpecialistBySpecialty(@RequestParam("specialty") String specialty) {
         return specialistService.getSpecialistBySpecialty(specialty);

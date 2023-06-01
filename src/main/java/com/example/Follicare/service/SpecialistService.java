@@ -24,6 +24,7 @@ public class SpecialistService {
      * getAllSpecialists retrieves the list of all specialists from the specialist repository.
      * If there are no specialists in the database, a NotFoundException is thrown
      * @return a list of specialists
+     * @throws NotFoundException If no specialists are found in the database.
      */
     public List<Specialist> getAllSpecialists() {
         List<Specialist> allSpecialists = specialistRepository.findAll();
@@ -37,6 +38,13 @@ public class SpecialistService {
         }
     }
 
+    /**
+     * Retrieves a list of specialists based on the given specialty.
+     *
+     * @param specialty The specialty to filter specialists by.
+     * @return A list of specialists specializing in the given specialty.
+     * @throws NotFoundException If no specialists are found for the given specialty.
+     */
     public List<Specialist> getSpecialistBySpecialty(String specialty) {
         // Search for specialist by specialty
         List<Specialist> specialist = specialistRepository.findAllBySpecialty(specialty);
