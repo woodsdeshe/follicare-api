@@ -20,3 +20,8 @@ Feature: Model Functionality
     Given a user has a specialist in their favorites list
     When the user removes the specialist from their favorites
     Then the specialist should be removed from the user's favorites list
+
+  Scenario: Retrieving Specialists by Hair Disorder
+    Given a user has a specific hair disorder
+    When the user searches for specialists by hair disorder
+    Then a list of specialists specializing in that hair disorder should be returned
