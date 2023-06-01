@@ -16,10 +16,20 @@ Feature: Model Functionality
     When the user adds the specialist to their favorites
     Then the specialist should be added to the user's favorites list
 
+  Scenario: User gets a list of specialists in their favorites list
+    Given the user has added specialists to their favorites list
+    When the user requests the list of specialists in their favorites list
+    Then the system should return a list of specialists in their favorites list
+
   Scenario: Removing a Specialist from Favorites
     Given a user has a specialist in their favorites list
     When the user removes the specialist from their favorites
     Then the specialist should be removed from the user's favorites list
+
+  Scenario: User retrieves a list of all specialists
+    Given there are multiple specialists in the system
+    When the user requests the list of all specialists
+    Then the system should return a list of all specialists
 
   Scenario: Retrieving Specialists by Hair Disorder
     Given a user has a specific hair disorder
@@ -35,6 +45,11 @@ Feature: Model Functionality
     Given a user has a specific hair disorder and zip code
     When the user searches for specialists by hair disorder and zip code
     Then a list of specialists specializing in the hair disorder and located in the zip code should be returned
+
+  Scenario: User retrieves a list of all resources
+    Given there are multiple topics in the system
+    When the user requests the list of all topics
+    Then the system should return a list of all topics
 
   Scenario: Retrieving Resources by Topic
     Given a user provides a specific topic name
