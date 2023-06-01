@@ -21,5 +21,20 @@ public class FollicareCucumberTestDefinitions {
 
     @Then("the specialist should be added to the user's favorites list")
     public void theSpecialistShouldBeAddedToTheUserSFavoritesList() {
+        
+    }
+
+    @Given("there are multiple specialists in the system")
+    public void thereAreMultipleSpecialistsInTheSystem() {
+
+
+    }
+
+    @When("the user requests the list of all specialists")
+    public void theUserRequestsTheListOfAllSpecialists() {
+    }
+
+    @Then("the system should return a list of all specialists")
+    public void theSystemShouldReturnAListOfAllSpecialists() {
     }
 }
