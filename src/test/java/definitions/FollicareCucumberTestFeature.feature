@@ -15,3 +15,8 @@ Feature: Model Functionality
     Given a user has a valid profile and a specialist exists
     When the user adds the specialist to their favorites
     Then the specialist should be added to the user's favorites list
+
+  Scenario: Removing a Specialist from Favorites
+    Given a user has a specialist in their favorites list
+    When the user removes the specialist from their favorites
+    Then the specialist should be removed from the user's favorites list
