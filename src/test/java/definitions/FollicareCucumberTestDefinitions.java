@@ -1,6 +1,7 @@
 package definitions;
 
 import com.example.Follicare.FollicareApplication;
+import com.example.Follicare.model.Specialist;
 import com.example.Follicare.repository.SpecialistRepository;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -13,6 +14,7 @@ import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +31,11 @@ public class FollicareCucumberTestDefinitions {
     private static ResponseEntity<String> responseEntity;
     private static List<?> list;
     private static RequestSpecification request;
+    private List<Specialist> specialistsBySpecialty;
+    private String specialty;
+    private ResponseEntity<List<Specialist>> specialtyResponse;
+
+
 
     @Autowired
     private SpecialistRepository specialistRepository;
@@ -67,18 +74,29 @@ public class FollicareCucumberTestDefinitions {
         Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
 
-    @Given("a user has a specific hair disorder")
-    public void aUserHasASpecificHairDisorder() {
-
-
+    @Given("a specialist specializes in a specific specialty")
+    public void aSpecialistSpecializesInASpecificSpecialty() {
+        specialty = "Alopecia Areata";
     }
 
     @When("the user searches for specialists by hair disorder")
     public void theUserSearchesForSpecialistsByHairDisorder() {
-
+        specialtyResponse = new RestTemplate().exchange(BASE_URL + port + "/api/specialists?specialty=" + specialty, HttpMethod.GET, null, new ParameterizedTypeReference<List<Specialist>>() {
+        });
+        specialistsBySpecialty = specialtyResponse.getBody();
     }
 
     @Then("a list of specialists specializing in that hair disorder should be returned")
     public void aListOfSpecialistsSpecializingInThatHairDisorderShouldBeReturned() {
+        Assert.assertNotNull(specialistsBySpecialty);
+        Assert.assertFalse(specialistsBySpecialty.isEmpty());
+        for (Specialist specialist : specialistsBySpecialty) {
+            System.out.println("Actual Specialist Specialty: " + specialist.getSpecialty());
+            System.out.println("Expected Specialty: " + specialty);
+
+            Assert.assertEquals(specialty, specialist.getSpecialty());
+        }
     }
+
+
 }

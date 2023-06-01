@@ -31,8 +31,8 @@ Feature: Model Functionality
     When the user requests the list of all specialists
     Then the system should return a list of all specialists
 
-  Scenario: Retrieving Specialists by Hair Disorder
-    Given a user has a specific hair disorder
+  Scenario: Retrieving Specialists by Specialty
+    Given a specialist specializes in a specific specialty
     When the user searches for specialists by hair disorder
     Then a list of specialists specializing in that hair disorder should be returned
 
