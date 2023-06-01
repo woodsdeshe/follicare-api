@@ -9,6 +9,7 @@ import io.cucumber.spring.CucumberContextConfiguration;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
@@ -57,6 +58,7 @@ public class FollicareCucumberTestDefinitions {
 
     @When("the user requests the list of all specialists")
     public void theUserRequestsTheListOfAllSpecialists() {
+        Assert.assertTrue(list.size() > 0);
     }
 
     @Then("the system should return a list of all specialists")
