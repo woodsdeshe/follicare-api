@@ -26,7 +26,7 @@ public class Specialist {
     private String specialty;
 
     @Column
-    private Character zipCode;
+    private String zipCode;
 
     @Column
     private String email;
@@ -40,7 +40,7 @@ public class Specialist {
     public Specialist() {
     }
 
-    public Specialist(Long id, String firstName, String lastName, String specialty, Character zipCode, String email, String phoneNumber) {
+    public Specialist(Long id, String firstName, String lastName, String specialty, String zipCode, String email, String phoneNumber) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -82,11 +82,11 @@ public class Specialist {
         this.specialty = specialty;
     }
 
-    public Character getZipCode() {
+    public String getZipCode() {
         return zipCode;
     }
 
-    public void setZipCode(Character zipCode) {
+    public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
     }
 
