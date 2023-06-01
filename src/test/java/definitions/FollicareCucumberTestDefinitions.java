@@ -24,7 +24,7 @@ import java.util.List;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = FollicareApplication.class)
 public class FollicareCucumberTestDefinitions {
 
-    private static final String BASE_URL = "http://localhost";
+    private static final String BASE_URL = "http://localhost:";
     private static Response response;
     private static ResponseEntity<String> responseEntity;
     private static List<?> list;
@@ -65,5 +65,20 @@ public class FollicareCucumberTestDefinitions {
     @Then("the system should return a list of all specialists")
     public void theSystemShouldReturnAListOfAllSpecialists() {
         Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+    }
+
+    @Given("a user has a specific hair disorder")
+    public void aUserHasASpecificHairDisorder() {
+
+
+    }
+
+    @When("the user searches for specialists by hair disorder")
+    public void theUserSearchesForSpecialistsByHairDisorder() {
+
+    }
+
+    @Then("a list of specialists specializing in that hair disorder should be returned")
+    public void aListOfSpecialistsSpecializingInThatHairDisorderShouldBeReturned() {
     }
 }

@@ -3,11 +3,11 @@ package com.example.Follicare.service;
 import com.example.Follicare.exceptions.NotFoundException;
 import com.example.Follicare.model.Specialist;
 import com.example.Follicare.repository.SpecialistRepository;
-import com.example.Follicare.seed.SpecialistData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SpecialistService {
@@ -34,6 +34,18 @@ public class SpecialistService {
         } else {
             //Throws an error when there are no businesses in the database
             throw new NotFoundException("No specialists found");
+        }
+    }
+
+    public Optional<Specialist> getSpecialistBySpecialty(String specialty) {
+        // Search for specialist by specialty
+        Optional<Specialist> specialist = specialistRepository.findSpecialistBySpecialty(specialty);
+        // If specialist is found, return the specialists' data
+        if (specialist.isPresent()) {
+            return specialist;
+        } else {
+            // Throw an error if the specialist is not found in the database
+            throw new NotFoundException("Specialist with " + specialty + " not found");
         }
     }
 }
