@@ -3,11 +3,11 @@ package com.example.Follicare.service;
 import com.example.Follicare.exceptions.NotFoundException;
 import com.example.Follicare.model.Specialist;
 import com.example.Follicare.repository.SpecialistRepository;
-import com.example.Follicare.seed.SpecialistData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SpecialistService {
@@ -24,6 +24,7 @@ public class SpecialistService {
      * getAllSpecialists retrieves the list of all specialists from the specialist repository.
      * If there are no specialists in the database, a NotFoundException is thrown
      * @return a list of specialists
+     * @throws NotFoundException If no specialists are found in the database.
      */
     public List<Specialist> getAllSpecialists() {
         List<Specialist> allSpecialists = specialistRepository.findAll();
@@ -36,4 +37,52 @@ public class SpecialistService {
             throw new NotFoundException("No specialists found");
         }
     }
+
+    /**
+     * Retrieves a list of specialists based on the given specialty.
+     *
+     * @param specialty The specialty to filter specialists by.
+     * @return A list of specialists specializing in the given specialty.
+     * @throws NotFoundException If no specialists are found for the given specialty.
+     */
+    public List<Specialist> getSpecialistBySpecialty(String specialty) {
+        // Search for specialist by specialty
+        List<Specialist> specialist = specialistRepository.findAllBySpecialty(specialty);
+
+        if (specialist.isEmpty()) {
+            // Throw an error if the specialist is not found in the database
+            throw new NotFoundException("Specialist with " + specialty + " specialty not found");
+        } else {
+            // If specialist is found, return the specialists' data
+            return specialist;
+        }
+
+    }
+
+    public List<Specialist> getSpecialistByZipCode(String zipCode) {
+        // Search for specialist by zip code
+        List<Specialist> specialist = specialistRepository.findAllByZipCode(zipCode);
+
+        if (specialist.isEmpty()) {
+            // Throw an error if the specialist is not found in the database
+            throw new NotFoundException("Specialist in zipcode " + zipCode + " not found");
+        } else {
+            // If specialist is found, return the specialists' data
+            return specialist;
+        }
+    }
+
+    public List<Specialist> getSpecialistByZipCodeAndSpecialty(String zipCode, String specialty) {
+        //Search for specialist by zipcode and specialty
+        List<Specialist> specialist = specialistRepository.findAllBySpecialtyAndZipCode(specialty, zipCode);
+
+        if (specialist.isEmpty()) {
+            // Throw an error if the specialist is not found in the database
+            throw new NotFoundException("Specialist in zipcode " + zipCode + " or specialty " + specialty + " not found");
+        } else {
+            // If specialist is found, return the specialists' data
+            return specialist;
+        }
+    }
+
 }
