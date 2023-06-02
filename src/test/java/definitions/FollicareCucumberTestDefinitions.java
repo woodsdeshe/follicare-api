@@ -99,12 +99,12 @@ public class FollicareCucumberTestDefinitions {
 
     @Given("a specialist in located in a specific zip code")
     public void specialistInASpecificZipCode() {
-        zipCode = "49501";
+        zipCode = "49505";
     }
 
     @When("the user searches for specialists by zip code")
     public void theUserSearchesForSpecialistsByZipCode() {
-        specialistResponse = new RestTemplate().exchange(BASE_URL + port + "/api/specialists?zipCode?zipCode=" + zipCode, HttpMethod.GET, null, new ParameterizedTypeReference<List<Specialist>>() {
+        specialistResponse = new RestTemplate().exchange(BASE_URL + port + "/api/specialists?zipCode=" + zipCode, HttpMethod.GET, null, new ParameterizedTypeReference<List<Specialist>>() {
         });
         specialistList = specialistResponse.getBody();
 

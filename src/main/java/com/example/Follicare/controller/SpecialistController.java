@@ -27,11 +27,16 @@ public class SpecialistController {
     }
 
     // Functionality: Returns a list of specialists by specialty
-    // Path: "http://localhost:8080/api/specialists?hairDisorder={hairDisorder}";
+    // Path: http://localhost:8080/api/specialists?hairDisorder={hairDisorder};
     @GetMapping(params = "specialty")
     public List<Specialist> getSpecialistBySpecialty(@RequestParam("specialty") String specialty) {
         return specialistService.getSpecialistBySpecialty(specialty);
     }
 
-    // Functionality: Returns a list of spe
+    // Functionality: Returns a list of specialists by zip code
+    // Path: http://localhost:8080/api/specialists?zipCode={zipCode}
+    @GetMapping(params = "zipCode")
+    public List<Specialist> getSpecialistByZipCode(@RequestParam("zipCode") String zipCode) {
+        return specialistService.getSpecialistByZipCode(zipCode);
+    }
 }
