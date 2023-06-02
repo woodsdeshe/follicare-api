@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface ResourcesRepository extends JpaRepository<Resources, Long> {
 
-    List<Resources> searchResourcesByTitleContainingOrderByTitle(String title);
+    List<Resources> findByTitleLike(String partialTitle);
 
 }

@@ -3,6 +3,7 @@ package definitions;
 import com.example.Follicare.FollicareApplication;
 import com.example.Follicare.model.Resources;
 import com.example.Follicare.model.Specialist;
+import com.example.Follicare.repository.ResourcesRepository;
 import com.example.Follicare.repository.SpecialistRepository;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -20,7 +21,9 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriUtils;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @CucumberContextConfiguration
@@ -38,12 +41,15 @@ public class FollicareCucumberTestDefinitions {
     private String zipCode;
     private List<Resources> resourcesList;
     private ResponseEntity<List<Resources>> resourceResponse;
-    private String title;
+    private String partialTitle;
 
 
 
     @Autowired
     private SpecialistRepository specialistRepository;
+
+    @Autowired
+    private ResourcesRepository resourcesRepository;
 
     @LocalServerPort
     String port;
@@ -149,7 +155,7 @@ public class FollicareCucumberTestDefinitions {
 
     @Given("there are multiple topics in the system")
     public void thereAreMultipleTopicsInTheSystem() {
-        responseEntity = new RestTemplate().exchange(BASE_URL + port + "/api/resources", HttpMethod.GET, null, String.class);
+        responseEntity = new RestTemplate().exchange(BASE_URL + port + "/api/resources/all", HttpMethod.GET, null, String.class);
         list = JsonPath.from(String.valueOf(responseEntity.getBody())).get();
     }
 
@@ -165,13 +171,15 @@ public class FollicareCucumberTestDefinitions {
 
     @Given("a user provides a specific topic title")
     public void aUserProvidesASpecificTopicTitle() {
-        title = "Alopecia";
+        String title = "Alopecia";
+        partialTitle = "%" + title + "%";
     }
 
     @When("the user searches for resources by title")
     public void theUserSearchesForResourcesByTitle() {
-        resourceResponse = new RestTemplate().exchange(BASE_URL + port + "/api/resources?titleLike=" + title, HttpMethod.GET, null, new ParameterizedTypeReference<List<Resources>>() {
-        });
+        String encodedPartialTitle = UriUtils.encode(partialTitle, StandardCharsets.UTF_8);
+        String url = BASE_URL + port + "/api/resources?partialTitle=" + encodedPartialTitle;
+        resourceResponse = new RestTemplate().exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<List<Resources>>() {});
         resourcesList = resourceResponse.getBody();
     }
 
@@ -180,7 +188,7 @@ public class FollicareCucumberTestDefinitions {
         Assert.assertNotNull(resourcesList);
         Assert.assertFalse(resourcesList.isEmpty());
         for (Resources resource : resourcesList) {
-            Assert.assertTrue(resource.getTitle().contains(title));
+            Assert.assertTrue(resource.getTitle().contains(partialTitle));
         }
     }
 }
