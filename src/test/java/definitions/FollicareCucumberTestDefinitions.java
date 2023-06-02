@@ -149,16 +149,18 @@ public class FollicareCucumberTestDefinitions {
 
     @Given("there are multiple topics in the system")
     public void thereAreMultipleTopicsInTheSystem() {
-        
+        responseEntity = new RestTemplate().exchange(BASE_URL + port + "/api/resources", HttpMethod.GET, null, String.class);
+        list = JsonPath.from(String.valueOf(responseEntity.getBody())).get();
     }
 
     @When("the user requests the list of all topics")
     public void theUserRequestsTheListOfAllTopics() {
-        
+        Assert.assertTrue(list.size() > 0);
     }
 
     @Then("the system should return a list of all topics")
     public void theSystemShouldReturnAListOfAllTopics() {
+        Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
 
     @Given("a user provides a specific topic title")
