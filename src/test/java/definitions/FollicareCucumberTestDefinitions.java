@@ -118,4 +118,28 @@ public class FollicareCucumberTestDefinitions {
             Assert.assertEquals(zipCode, specialist.getZipCode());
         }
     }
+
+    @Given("a specialist specializes in a specific specialty and is located in a specific zip code")
+    public void aSpecialistSpecializesInASpecificSpecialtyAndIsLocatedInASpecificZipCode() {
+        zipCode = "49505";
+        specialty = "Alopecia Areata";
+
+    }
+
+    @When("the user searches for specialists by specialty and zip code")
+    public void theUserSearchesForSpecialistsBySpecialtyAndZipCode() {
+        specialistResponse = new RestTemplate().exchange(BASE_URL + port + "/api/specialists?zipcode=" + zipCode + "&specialty=" + specialty, HttpMethod.GET, null, new ParameterizedTypeReference<List<Specialist>>() {
+        });
+        specialistList = specialistResponse.getBody();
+    }
+
+    @Then("a list of specialists specializing in the specialty and located in the zip code should be returned")
+    public void aListOfSpecialistsSpecializingInTheSpecialtyAndLocatedInTheZipCodeShouldBeReturned() {
+        Assert.assertNotNull(specialistList);
+        Assert.assertFalse(specialistList.isEmpty());
+        for (Specialist specialist: specialistList) {
+            Assert.assertEquals(zipCode, specialist.getZipCode());
+            Assert.assertEquals(specialty, specialist.getSpecialty());
+        }
+    }
 }

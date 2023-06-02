@@ -42,9 +42,9 @@ Feature: Model Functionality
     Then a list of specialists located in that zip code should be returned
 
   Scenario: Retrieving Specialists by Hair Disorder and Zip Code
-    Given a user has a specific hair disorder and zip code
-    When the user searches for specialists by hair disorder and zip code
-    Then a list of specialists specializing in the hair disorder and located in the zip code should be returned
+    Given a specialist specializes in a specific specialty and is located in a specific zip code
+    When the user searches for specialists by specialty and zip code
+    Then a list of specialists specializing in the specialty and located in the zip code should be returned
 
   Scenario: User retrieves a list of all resources
     Given there are multiple topics in the system
