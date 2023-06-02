@@ -36,6 +36,7 @@ public class Profiles {
 
     @OneToMany(mappedBy = "user")
     @LazyCollection(LazyCollectionOption.FALSE)
+    @JsonIgnore
     private List<Favorites> favoritesList;
 
     public List<Favorites> getFavoritesList() {
