@@ -165,15 +165,22 @@ public class FollicareCucumberTestDefinitions {
 
     @Given("a user provides a specific topic title")
     public void aUserProvidesASpecificTopicTitle() {
-        
+        title = "Alopecia";
     }
 
     @When("the user searches for resources by title")
     public void theUserSearchesForResourcesByTitle() {
-        
+        resourceResponse = new RestTemplate().exchange(BASE_URL + port + "/api/resources?titleLike=" + title, HttpMethod.GET, null, new ParameterizedTypeReference<List<Resources>>() {
+        });
+        resourcesList = resourceResponse.getBody();
     }
 
     @Then("a list of resources related to that title should be returned")
     public void aListOfResourcesRelatedToThatTitleShouldBeReturned() {
+        Assert.assertNotNull(resourcesList);
+        Assert.assertFalse(resourcesList.isEmpty());
+        for (Resources resource : resourcesList) {
+            Assert.assertTrue(resource.getTitle().contains(title));
+        }
     }
 }
