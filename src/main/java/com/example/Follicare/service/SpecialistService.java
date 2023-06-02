@@ -72,5 +72,17 @@ public class SpecialistService {
         }
     }
 
+    public List<Specialist> getSpecialistByZipCodeAndSpecialty(String zipCode, String specialty) {
+        //Search for specialist by zipcode and specialty
+        List<Specialist> specialist = specialistRepository.findAllBySpecialtyAndZipCode(specialty, zipCode);
+
+        if (specialist.isEmpty()) {
+            // Throw an error if the specialist is not found in the database
+            throw new NotFoundException("Specialist in zipcode " + zipCode + " or specialty " + specialty + " not found");
+        } else {
+            // If specialist is found, return the specialists' data
+            return specialist;
+        }
+    }
 
 }
