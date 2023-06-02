@@ -128,7 +128,7 @@ public class FollicareCucumberTestDefinitions {
 
     @When("the user searches for specialists by specialty and zip code")
     public void theUserSearchesForSpecialistsBySpecialtyAndZipCode() {
-        specialistResponse = new RestTemplate().exchange(BASE_URL + port + "/api/specialists?zipcode=" + zipCode + "&specialty=" + specialty, HttpMethod.GET, null, new ParameterizedTypeReference<List<Specialist>>() {
+        specialistResponse = new RestTemplate().exchange(BASE_URL + port + "/api/specialists?zipCode=" + zipCode + "&specialty=" + specialty, HttpMethod.GET, null, new ParameterizedTypeReference<List<Specialist>>() {
         });
         specialistList = specialistResponse.getBody();
     }
