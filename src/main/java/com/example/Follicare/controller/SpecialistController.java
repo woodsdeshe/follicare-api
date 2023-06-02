@@ -39,4 +39,12 @@ public class SpecialistController {
     public List<Specialist> getSpecialistByZipCode(@RequestParam("zipCode") String zipCode) {
         return specialistService.getSpecialistByZipCode(zipCode);
     }
+
+    // Functionality: Returns a list of specialists by zip code and specialty
+    // Path: http://localhost:8080/api/specialists?zipCode={zipCode}&specialty={specialty}
+    @GetMapping(params = {"specialty", "zipCode"})
+    public List<Specialist> getSpecialistByZipCodeAndSpecialty(@RequestParam("specialty") String specialty,
+                                                               @RequestParam("zipCode") String zipCode) {
+        return specialistService.getSpecialistByZipCodeAndSpecialty(zipCode, specialty);
+    }
 }
