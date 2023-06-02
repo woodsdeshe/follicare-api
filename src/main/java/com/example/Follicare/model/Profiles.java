@@ -5,6 +5,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -30,9 +31,9 @@ public class Profiles {
     @Column
     private String zipCode;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
+    @OneToOne(mappedBy = "profiles")
     @JsonIgnore
+    @LazyCollection(LazyCollectionOption.FALSE)
     private User user;
 
     @ManyToMany
@@ -44,7 +45,10 @@ public class Profiles {
     private List<Favorites> favoritesList;
 
     public List<Favorites> getFavoritesList() {
-        return favoritesList;
+            if (favoritesList == null) {
+                favoritesList = new ArrayList<>();
+            }
+            return favoritesList;
     }
 
     public void setFavoritesList(List<Favorites> favoritesList) {
