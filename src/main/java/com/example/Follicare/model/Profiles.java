@@ -1,6 +1,11 @@
 package com.example.Follicare.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "profiles")
@@ -25,13 +30,21 @@ public class Profiles {
     @Column
     private Character zipCode;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @OneToOne(mappedBy = "profiles")
+    @JsonIgnore
     private User user;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "favorites_id")
-    private Favorites favorites;
+    @OneToMany(mappedBy = "user")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Favorites> favoritesList;
+
+    public List<Favorites> getFavoritesList() {
+        return favoritesList;
+    }
+
+    public void setFavoritesList(List<Favorites> favoritesList) {
+        this.favoritesList = favoritesList;
+    }
 
     public User getUser() {
         return user;

@@ -17,7 +17,7 @@ public class Favorites {
     @JoinColumn(name = "specialist_id")
     private Specialist specialist;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "profile_id")
     private Profiles profiles;
 
