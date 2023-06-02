@@ -51,7 +51,7 @@ Feature: Model Functionality
     When the user requests the list of all topics
     Then the system should return a list of all topics
 
-  Scenario: Retrieving Resources by Topic
-    Given a user provides a specific topic name
-    When the user searches for resources by topic
-    Then a list of resources related to that topic should be returned
+  Scenario: Retrieving Resources by Topic Title
+    Given a user provides a specific topic title
+    When the user searches for resources by title
+    Then a list of resources related to that title should be returned

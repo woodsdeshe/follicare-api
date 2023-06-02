@@ -1,6 +1,7 @@
 package definitions;
 
 import com.example.Follicare.FollicareApplication;
+import com.example.Follicare.model.Resources;
 import com.example.Follicare.model.Specialist;
 import com.example.Follicare.repository.SpecialistRepository;
 import io.cucumber.java.en.Given;
@@ -35,6 +36,9 @@ public class FollicareCucumberTestDefinitions {
     private String specialty;
     private ResponseEntity<List<Specialist>> specialistResponse;
     private String zipCode;
+    private List<Resources> resourcesList;
+    private ResponseEntity<List<Resources>> resourceResponse;
+    private String title;
 
 
 
@@ -141,5 +145,33 @@ public class FollicareCucumberTestDefinitions {
             Assert.assertEquals(zipCode, specialist.getZipCode());
             Assert.assertEquals(specialty, specialist.getSpecialty());
         }
+    }
+
+    @Given("there are multiple topics in the system")
+    public void thereAreMultipleTopicsInTheSystem() {
+        
+    }
+
+    @When("the user requests the list of all topics")
+    public void theUserRequestsTheListOfAllTopics() {
+        
+    }
+
+    @Then("the system should return a list of all topics")
+    public void theSystemShouldReturnAListOfAllTopics() {
+    }
+
+    @Given("a user provides a specific topic title")
+    public void aUserProvidesASpecificTopicTitle() {
+        
+    }
+
+    @When("the user searches for resources by title")
+    public void theUserSearchesForResourcesByTitle() {
+        
+    }
+
+    @Then("a list of resources related to that title should be returned")
+    public void aListOfResourcesRelatedToThatTitleShouldBeReturned() {
     }
 }
