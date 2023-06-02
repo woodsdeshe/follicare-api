@@ -29,4 +29,17 @@ public class ResourcesService {
             throw new NotFoundException("No resources found");
         }
     }
+
+    public List<Resources> getResourcesByTitle(String title) {
+        // Search for resource by title
+        List<Resources> resources = resourcesRepository.searchResourcesByTitleContainingOrderByTitle(title);
+
+        if (resources.isEmpty()) {
+            // Throw an error id the specialist is not found in database
+            throw new NotFoundException("Resource title of " + title + " not found");
+        } else {
+            // If resource is found, return the resources' data
+            return resources;
+        }
+    }
 }
