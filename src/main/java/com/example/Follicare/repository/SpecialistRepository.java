@@ -9,9 +9,9 @@ import java.util.Optional;
 public interface SpecialistRepository extends JpaRepository<Specialist, Long> {
     Optional<Specialist> findById(Long specialistId);
 
-    Optional<Specialist> findSpecialistByZipCode(Character zipCode);
+    List<Specialist> findAllByZipCode(String zipCode);
 
     List<Specialist> findAllBySpecialty(String specialty);
 
-    Optional<Specialist>findSpecialistBySpecialtyAndZipCode(String specialty, Character zipCode);
+    List<Specialist>findAllBySpecialtyAndZipCode(String specialty, String zipCode);
 }

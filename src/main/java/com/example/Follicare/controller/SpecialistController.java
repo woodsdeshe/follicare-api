@@ -32,4 +32,6 @@ public class SpecialistController {
     public List<Specialist> getSpecialistBySpecialty(@RequestParam("specialty") String specialty) {
         return specialistService.getSpecialistBySpecialty(specialty);
     }
+
+    // Functionality: Returns a list of spe
 }

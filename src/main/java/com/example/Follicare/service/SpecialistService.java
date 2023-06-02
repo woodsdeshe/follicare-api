@@ -48,12 +48,28 @@ public class SpecialistService {
     public List<Specialist> getSpecialistBySpecialty(String specialty) {
         // Search for specialist by specialty
         List<Specialist> specialist = specialistRepository.findAllBySpecialty(specialty);
-        // If specialist is found, return the specialists' data
+
         if (specialist.isEmpty()) {
             // Throw an error if the specialist is not found in the database
-            throw new NotFoundException("Specialist with " + specialty + " not found");
+            throw new NotFoundException("Specialist with " + specialty + " specialty not found");
         } else {
+            // If specialist is found, return the specialists' data
+            return specialist;
+        }
+
+    }
+
+    public List<Specialist> getSpecialistByZipCode(String zipCode) {
+        // Search for specialist by zip code
+        List<Specialist> specialist = specialistRepository.findAllByZipCode(zipCode);
+
+        if (specialist.isEmpty()) {
+            // Throw an error if the specialist is not found in the database
+            throw new NotFoundException("Specialist in zipcode " + zipCode + " not found");
+        } else {
+            // If specialist is found, return the specialists' data
             return specialist;
         }
     }
+
 }

@@ -31,9 +31,10 @@ public class FollicareCucumberTestDefinitions {
     private static ResponseEntity<String> responseEntity;
     private static List<?> list;
     private static RequestSpecification request;
-    private List<Specialist> specialistsBySpecialty;
+    private List<Specialist> specialistList;
     private String specialty;
-    private ResponseEntity<List<Specialist>> specialtyResponse;
+    private ResponseEntity<List<Specialist>> specialistResponse;
+    private String zipCode;
 
 
 
@@ -81,22 +82,40 @@ public class FollicareCucumberTestDefinitions {
 
     @When("the user searches for specialists by hair disorder")
     public void theUserSearchesForSpecialistsByHairDisorder() {
-        specialtyResponse = new RestTemplate().exchange(BASE_URL + port + "/api/specialists?specialty=" + specialty, HttpMethod.GET, null, new ParameterizedTypeReference<List<Specialist>>() {
+        specialistResponse = new RestTemplate().exchange(BASE_URL + port + "/api/specialists?specialty=" + specialty, HttpMethod.GET, null, new ParameterizedTypeReference<List<Specialist>>() {
         });
-        specialistsBySpecialty = specialtyResponse.getBody();
+        specialistList = specialistResponse.getBody();
     }
 
     @Then("a list of specialists specializing in that hair disorder should be returned")
     public void aListOfSpecialistsSpecializingInThatHairDisorderShouldBeReturned() {
-        Assert.assertNotNull(specialistsBySpecialty);
-        Assert.assertFalse(specialistsBySpecialty.isEmpty());
-        for (Specialist specialist : specialistsBySpecialty) {
-            System.out.println("Actual Specialist Specialty: " + specialist.getSpecialty());
-            System.out.println("Expected Specialty: " + specialty);
-
+        Assert.assertNotNull(specialistList);
+        Assert.assertFalse(specialistList.isEmpty());
+        for (Specialist specialist : specialistList) {
             Assert.assertEquals(specialty, specialist.getSpecialty());
         }
     }
 
 
+    @Given("a specialist in located in a specific zip code")
+    public void specialistInASpecificZipCode() {
+        zipCode = "49501";
+    }
+
+    @When("the user searches for specialists by zip code")
+    public void theUserSearchesForSpecialistsByZipCode() {
+        specialistResponse = new RestTemplate().exchange(BASE_URL + port + "/api/specialists?zipCode?zipCode=" + zipCode, HttpMethod.GET, null, new ParameterizedTypeReference<List<Specialist>>() {
+        });
+        specialistList = specialistResponse.getBody();
+
+    }
+
+    @Then("a list of specialists located in that zip code should be returned")
+    public void aListOfSpecialistsLocatedInThatZipCodeShouldBeReturned() {
+        Assert.assertNotNull(specialistList);
+        Assert.assertFalse(specialistList.isEmpty());
+        for (Specialist specialist: specialistList) {
+            Assert.assertEquals(zipCode, specialist.getZipCode());
+        }
+    }
 }
