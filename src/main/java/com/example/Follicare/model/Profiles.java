@@ -28,7 +28,7 @@ public class Profiles {
     private String disorderDescription;
 
     @Column
-    private Character zipCode;
+    private String zipCode;
 
     @OneToOne(mappedBy = "profiles")
     @JsonIgnore
@@ -58,7 +58,7 @@ public class Profiles {
     public Profiles() {
     }
 
-    public Profiles(Long id, String firstName, String lastName, String hairDisorder, String disorderDescription, Character zipCode) {
+    public Profiles(Long id, String firstName, String lastName, String hairDisorder, String disorderDescription, String zipCode) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -107,11 +107,11 @@ public class Profiles {
         this.disorderDescription = disorderDescription;
     }
 
-    public Character getZipCode() {
+    public String getZipCode() {
         return zipCode;
     }
 
-    public void setZipCode(Character zipCode) {
+    public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
     }
 
