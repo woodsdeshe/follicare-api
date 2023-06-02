@@ -30,13 +30,17 @@ public class Profiles {
     @Column
     private String zipCode;
 
-    @OneToOne(mappedBy = "profiles", cascade = CascadeType.ALL)
+    @OneToOne
+    @JoinColumn(name = "user_id")
     @JsonIgnore
     private User user;
 
-    @OneToMany(mappedBy = "user")
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @JsonIgnore
+    @ManyToMany
+    @JoinTable(
+            name = "profile_favorites",
+            joinColumns = @JoinColumn(name = "profile_id"),
+            inverseJoinColumns = @JoinColumn(name = "favorites_id")
+    )
     private List<Favorites> favoritesList;
 
     public List<Favorites> getFavoritesList() {

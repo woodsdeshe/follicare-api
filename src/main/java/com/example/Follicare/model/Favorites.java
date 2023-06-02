@@ -3,6 +3,7 @@ package com.example.Follicare.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "favorites")
@@ -13,19 +14,18 @@ public class Favorites {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "specialist_id")
+    @ManyToOne
+    @JoinColumn(name = "profile_id")
     private Specialist specialist;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "profile_id")
-    private Profiles profiles;
+    @ManyToMany(mappedBy = "favoritesList")
+    private List<Profiles> profiles;
 
-    public Profiles getProfiles() {
+    public List<Profiles> getProfiles() {
         return profiles;
     }
 
-    public void setProfiles(Profiles profiles) {
+    public void setProfiles(List<Profiles> profiles) {
         this.profiles = profiles;
     }
 
