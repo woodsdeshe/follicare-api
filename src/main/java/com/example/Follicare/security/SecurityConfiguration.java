@@ -63,21 +63,21 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{ // accepts a http server request
         http.authorizeRequests().antMatchers(HttpMethod.POST,
-                        "/api/users/register",
-                        "/api/users/login").permitAll()
+                        "/auth/users",
+                        "/register").permitAll()
 
-                .antMatchers(HttpMethod.GET,
-                        "/api/businesses",
-                        "/api/businesses/{businessId}",
-                        "/api/businesses/{businessId}/jobs",
-                        "/api/jobs",
-                        "/api/jobs/{jobId}",
-                        "/api/users/{userId}"
+                .antMatchers(HttpMethod.GET
+//                        "/api/businesses",
+//                        "/api/businesses/{businessId}",
+//                        "/api/businesses/{businessId}/jobs",
+//                        "/api/jobs",
+//                        "/api/jobs/{jobId}",
+//                        "/api/users/{userId}"
                 ).permitAll()// these are all public urls
                 .anyRequest().authenticated() // other urls need authentication
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // when you log into a server, you need to maintain a session. add this session so that our java springboot knows we're logged in
                 .and().csrf().disable(); // connects front/back end if they're on different servers
-        http.addFilterBefore((Filter) authJwtRequestFilter(), UsernamePasswordAuthenticationFilter.class); // added for JWT login
+        http.addFilterBefore(authJwtRequestFilter(), UsernamePasswordAuthenticationFilter.class); // added for JWT login
         return http.build();
     }
 

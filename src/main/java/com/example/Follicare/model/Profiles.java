@@ -30,7 +30,7 @@ public class Profiles {
     @Column
     private String zipCode;
 
-    @OneToOne(mappedBy = "profiles")
+    @OneToOne(mappedBy = "profiles", cascade = CascadeType.ALL)
     @JsonIgnore
     private User user;
 
