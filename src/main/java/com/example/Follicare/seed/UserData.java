@@ -58,7 +58,6 @@ public class UserData implements CommandLineRunner {
             Profiles bobSavedProfile = profileRepository.save(bobProfile);
             Profiles kandiSavedProfile =profileRepository.save(kandiProfile);
 
-            System.out.println(porshaProfile);
 
             // Seed data for initial setup
             Specialist specialist1 = new Specialist(1L, "Brandy", "Singer", "Alopecia Areata, Dermatology", "49505", "brandy@gmail.com", "123-456-7809");
@@ -67,11 +66,11 @@ public class UserData implements CommandLineRunner {
 
             specialistRepository.saveAll(Arrays.asList(specialist1, specialist2, specialist3));
 
-            Favorites porshaFavorites = new Favorites(specialist1);
-            Favorites kandiFavorites = new Favorites(specialist3);
+            Favorites porshaFavorites = new Favorites(specialist1.getId());
+            Favorites kandiFavorites = new Favorites(specialist3.getId());
 
-            porshaFavorites.setProfiles(porshaSavedProfile);
-            kandiFavorites.setProfiles(kandiSavedProfile);
+            porshaFavorites.setProfile(porshaSavedProfile);
+            kandiFavorites.setProfile(kandiSavedProfile);
 
             favoritesRepository.saveAll(Arrays.asList(porshaFavorites, kandiFavorites));
 

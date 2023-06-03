@@ -51,7 +51,7 @@ public class FavoritesService {
 
         List<Specialist> favorites = new ArrayList<>();
         for (Favorites favorite : favoritesList) {
-            Specialist specialist = favorite.getSpecialist();
+            Specialist specialist = favorite.getProfile().getSpecialist();
             favorites.add(specialist);
         }
         return favorites;

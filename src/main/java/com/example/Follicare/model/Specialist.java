@@ -34,8 +34,9 @@ public class Specialist {
     @Column
     private String phoneNumber;
 
-    @OneToMany(mappedBy = "specialist",cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "specialist", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Favorites> favorites;
+
 
     public Specialist() {
     }

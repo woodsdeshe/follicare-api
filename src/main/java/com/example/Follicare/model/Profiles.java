@@ -32,15 +32,16 @@ public class Profiles {
     private String zipCode;
 
     @ManyToOne
-    @JoinColumn(name = "favoritesList_id")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "zipCode")
+    @JoinColumn(name = "specialist_id")
     private Specialist specialist;
 
     @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Favorites> favoritesList;
+
 
     public List<Favorites> getFavoritesList() {
         return favoritesList;
