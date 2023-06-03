@@ -14,17 +14,13 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FavoritesService {
-    private UserRepository userRepository;
     private ProfileRepository profileRepository;
     private FavoritesRepository favoritesRepository;
 
-    @Autowired
-    public void setUserRepository(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     @Autowired
     public void setProfileRepository(ProfileRepository profileRepository) {
@@ -39,24 +35,25 @@ public class FavoritesService {
     /**
      * getFavoritesForUser retrieves the list of all specialists that are in a users favorites list
      *
-     * @param userId
+     * @param profileId
      * @return a list of all specialists in a users favorites list
+     * @throws NotFoundException If no profiles aren't found in the database for the specific id
      */
-    public List<Specialist> getFavoritesForUser(Long userId) {
-        User user = userRepository.findById(userId).orElse(null);
-        if (user == null) {
-            throw new NotFoundException("User not found");
+    public List<Specialist> getFavoritesForProfile(Long profileId) {
+        Optional<Profiles> profilesOptional = profileRepository.findById(profileId);
+
+        if (profilesOptional.isEmpty()) {
+            throw new NotFoundException("Profile not found for id " + profileId);
         }
 
-        List<Profiles> profiles = profileRepository.findByUser(user);
-        List<Specialist> favorites = new ArrayList<>();
+        Profiles profile = profilesOptional.get();
+        List<Favorites> favoritesList = profile.getSpecialist().getFavorites();
 
-            for (Profiles profile : profiles) {
-                List<Favorites> favoritesForProfile = favoritesRepository.findBySpecialist(profile.getSpecialist());
-                for (Favorites favorite : favoritesForProfile) {
-                    favorites.add(favorite.getSpecialist());
-                }
-            }
-            return favorites;
+        List<Specialist> favorites = new ArrayList<>();
+        for (Favorites favorite : favoritesList) {
+            Specialist specialist = favorite.getSpecialist();
+            favorites.add(specialist);
+        }
+        return favorites;
     }
 }
