@@ -12,18 +12,15 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(nullable = false)
     private String userName;
 
-    @Column(unique = true)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Column
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
-
-    @OneToOne
-    private Profiles profiles;
 
     public User() {
     }

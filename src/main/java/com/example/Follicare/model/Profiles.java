@@ -31,29 +31,9 @@ public class Profiles {
     @Column
     private String zipCode;
 
-    @OneToOne(mappedBy = "profiles")
-    @JsonIgnore
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToOne
+    @JoinColumn(name = "favoritesList_id")
     private User user;
-
-    @ManyToMany
-    @JoinTable(
-            name = "profile_favorites",
-            joinColumns = @JoinColumn(name = "profile_id"),
-            inverseJoinColumns = @JoinColumn(name = "favorites_id")
-    )
-    private List<Favorites> favoritesList;
-
-    public List<Favorites> getFavoritesList() {
-            if (favoritesList == null) {
-                favoritesList = new ArrayList<>();
-            }
-            return favoritesList;
-    }
-
-    public void setFavoritesList(List<Favorites> favoritesList) {
-        this.favoritesList = favoritesList;
-    }
 
     public User getUser() {
         return user;
@@ -62,6 +42,19 @@ public class Profiles {
     public void setUser(User user) {
         this.user = user;
     }
+
+    @ManyToOne
+    @JoinColumn(name = "zipCode")
+    private Specialist specialist;
+
+    public Specialist getSpecialist() {
+        return specialist;
+    }
+
+    public void setSpecialist(Specialist specialist) {
+        this.specialist = specialist;
+    }
+
 
     public Profiles() {
     }

@@ -8,7 +8,6 @@ import com.example.Follicare.repository.FavoritesRepository;
 import com.example.Follicare.repository.ProfileRepository;
 import com.example.Follicare.repository.SpecialistRepository;
 import com.example.Follicare.repository.UserRepository;
-import com.example.Follicare.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -22,8 +21,8 @@ public class UserData implements CommandLineRunner {
     @Autowired
     UserRepository userRepository;
 
-    @Autowired
-    UserService userService;
+//    @Autowired
+//    UserService userService;
 
     @Autowired
     ProfileRepository profileRepository;
@@ -47,9 +46,9 @@ public class UserData implements CommandLineRunner {
             User bob = new User(2L, "BoBWhit", "BobW@gmail.com", "bob2");
             User kandi = new User(3L, "Kandi1", "kandib@gmail.com", "excape4");
 
-            userService.createUser(porsha);
-            userService.createUser(bob);
-            userService.createUser(kandi);
+//            userService.createUser(porsha);
+//            userService.createUser(bob);
+//            userService.createUser(kandi);
 
             Profiles porshaProfile = new Profiles(1L, "Porsha", "Williams", "Traction Alopecia", "There are a few thin spots of hair along my hairline. I tend to wear my hair in tight ponytails.", "48205");
             Profiles bobProfile = new Profiles(2L, "Bob", "Whitfield", "Male Pattern Baldness", "My hairline has been reseeding as the years have gone by. My hair is thin and more fragile than usual.", "49505");
