@@ -20,7 +20,7 @@ public class FavoritesController {
     // Path:  http://localhost:8080/api/users/{profileId}/favorites
 
     public List<Specialist> getFavoritesForProfile(@PathVariable Long profileId) {
-        return favoritesService.getFavoritesForProfile(profileId);
+        return favoritesService.getListOfSpecialists(profileId);
     }
 
 }

@@ -47,21 +47,18 @@ public class FavoritesService {
      * @return a list of all specialists in a users favorites list
      * @throws NotFoundException If no profiles aren't found in the database for the specific id
      */
-    public List<Specialist> getFavoritesForProfile(Long profileId) {
-        Optional<Profiles> profilesOptional = profileRepository.findById(profileId);
+    public List<Specialist> getListOfSpecialists(Long favoritesId) {
+        Optional<Favorites> favorites = favoritesRepository.findById(favoritesId);
 
-        if (profilesOptional.isEmpty()) {
-            throw new NotFoundException("Profile not found for id " + profileId);
+        if (favorites.isPresent()) {
+            List<Specialist> specialistList = favoritesRepository.findById(favoritesId).get().getSpecialist();
+            if (!specialistList.isEmpty()) {
+                return specialistList;
+            } else {
+                throw new NotFoundException("No specialists in favorites list found");
+            }
+        } else {
+            throw new NotFoundException("No favorites list found in this profile");
         }
-
-        Profiles profile = profilesOptional.get();
-        List<Favorites> favoritesList = profile.getFavoritesList();
-
-        List<Specialist> favorites = new ArrayList<>();
-        for (Favorites favorite : favoritesList) {
-            List<Specialist> specialist = favorite.getSpecialist();
-            favorites.add((Specialist) specialist);
-        }
-        return favorites;
     }
 }
