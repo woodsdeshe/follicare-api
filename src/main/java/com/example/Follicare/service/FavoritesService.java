@@ -7,6 +7,7 @@ import com.example.Follicare.model.Specialist;
 import com.example.Follicare.model.User;
 import com.example.Follicare.repository.FavoritesRepository;
 import com.example.Follicare.repository.ProfileRepository;
+import com.example.Follicare.repository.SpecialistRepository;
 import com.example.Follicare.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
@@ -21,6 +22,8 @@ public class FavoritesService {
     private ProfileRepository profileRepository;
     private FavoritesRepository favoritesRepository;
 
+    private SpecialistRepository specialistRepository;
+
 
     @Autowired
     public void setProfileRepository(ProfileRepository profileRepository) {
@@ -30,6 +33,11 @@ public class FavoritesService {
     @Autowired
     public void setFavoritesRepository(FavoritesRepository favoritesRepository) {
         this.favoritesRepository = favoritesRepository;
+    }
+
+    @Autowired
+    public void setSpecialistRepository(SpecialistRepository specialistRepository) {
+        this.specialistRepository = specialistRepository;
     }
 
     /**
@@ -47,12 +55,12 @@ public class FavoritesService {
         }
 
         Profiles profile = profilesOptional.get();
-        List<Favorites> favoritesList = profile.getSpecialist().getFavorites();
+        List<Favorites> favoritesList = profile.getFavoritesList();
 
         List<Specialist> favorites = new ArrayList<>();
         for (Favorites favorite : favoritesList) {
-            Specialist specialist = favorite.getProfile().getSpecialist();
-            favorites.add(specialist);
+            List<Specialist> specialist = favorite.getSpecialist();
+            favorites.add((Specialist) specialist);
         }
         return favorites;
     }

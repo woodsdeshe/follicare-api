@@ -35,9 +35,6 @@ public class Profiles {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "specialist_id")
-    private Specialist specialist;
 
     @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Favorites> favoritesList;
@@ -58,16 +55,6 @@ public class Profiles {
     public void setUser(User user) {
         this.user = user;
     }
-
-
-    public Specialist getSpecialist() {
-        return specialist;
-    }
-
-    public void setSpecialist(Specialist specialist) {
-        this.specialist = specialist;
-    }
-
 
     public Profiles() {
     }

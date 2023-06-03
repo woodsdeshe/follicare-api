@@ -34,9 +34,17 @@ public class Specialist {
     @Column
     private String phoneNumber;
 
-    @OneToMany(mappedBy = "specialist", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Favorites> favorites;
+    @ManyToOne
+    @JoinColumn(name = "favorites_id")
+    private Favorites favorites;
 
+    public Favorites getFavorites() {
+        return favorites;
+    }
+
+    public void setFavorites(Favorites favorites) {
+        this.favorites = favorites;
+    }
 
     public Specialist() {
     }
@@ -107,13 +115,7 @@ public class Specialist {
         this.phoneNumber = phoneNumber;
     }
 
-    public List<Favorites> getFavorites() {
-        return favorites;
-    }
 
-    public void setFavorites(List<Favorites> favorites) {
-        this.favorites = favorites;
-    }
 
     @Override
     public String toString() {

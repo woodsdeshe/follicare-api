@@ -14,17 +14,11 @@ public class Favorites {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "specialist_id")
-    private Specialist specialist;
 
-    public Specialist getSpecialist() {
-        return specialist;
-    }
+    @OneToMany(mappedBy = "favorites", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Specialist> specialist;
 
-    public void setSpecialist(Specialist specialist) {
-        this.specialist = specialist;
-    }
+
 
     // Many favorites can belong to one profile
     @ManyToOne
@@ -54,6 +48,14 @@ public class Favorites {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public List<Specialist> getSpecialist() {
+        return specialist;
+    }
+
+    public void setSpecialist(List<Specialist> specialist) {
+        this.specialist = specialist;
     }
 
 
