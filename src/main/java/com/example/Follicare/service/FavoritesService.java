@@ -38,26 +38,25 @@ public class FavoritesService {
 
     /**
      * getFavoritesForUser retrieves the list of all specialists that are in a users favorites list
-     * If there are no specialists
+     *
      * @param userId
-     * @return
+     * @return a list of all specialists in a users favorites list
      */
     public List<Specialist> getFavoritesForUser(Long userId) {
         User user = userRepository.findById(userId).orElse(null);
         if (user == null) {
-            throw new IllegalArgumentException("User not found");
+            throw new NotFoundException("User not found");
         }
 
         List<Profiles> profiles = profileRepository.findByUser(user);
         List<Specialist> favorites = new ArrayList<>();
 
-        for (Profiles profile : profiles) {
-            List<Favorites> favoritesForProfile = favoritesRepository.findBySpecialist(profile.getSpecialist());
-            for (Favorites favorite : favoritesForProfile) {
-                favorites.add(favorite.getSpecialist());
+            for (Profiles profile : profiles) {
+                List<Favorites> favoritesForProfile = favoritesRepository.findBySpecialist(profile.getSpecialist());
+                for (Favorites favorite : favoritesForProfile) {
+                    favorites.add(favorite.getSpecialist());
+                }
             }
-        }
-
-        return favorites;
+            return favorites;
     }
 }
