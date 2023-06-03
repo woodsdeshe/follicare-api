@@ -1,10 +1,6 @@
 package com.example.Follicare.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "favorites")
@@ -19,11 +15,27 @@ public class Favorites {
     @JoinColumn(name = "specialist_id")
     private Specialist specialist;
 
-    public Favorites() {
+    @ManyToOne
+    @JoinColumn(name = "profile_id")
+    private Profiles profiles;
+
+    public Profiles getProfiles() {
+        return profiles;
+    }
+
+    public void setProfiles(Profiles profiles) {
+        this.profiles = profiles;
+    }
+
+    public Favorites(Specialist specialist1) {
     }
 
     public Favorites(Long id) {
         this.id = id;
+    }
+
+    public Favorites() {
+
     }
 
     public Long getId() {

@@ -35,6 +35,21 @@ public class Profiles {
     @JoinColumn(name = "favoritesList_id")
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name = "zipCode")
+    private Specialist specialist;
+
+    @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Favorites> favoritesList;
+
+    public List<Favorites> getFavoritesList() {
+        return favoritesList;
+    }
+
+    public void setFavoritesList(List<Favorites> favoritesList) {
+        this.favoritesList = favoritesList;
+    }
+
     public User getUser() {
         return user;
     }
@@ -43,9 +58,6 @@ public class Profiles {
         this.user = user;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "zipCode")
-    private Specialist specialist;
 
     public Specialist getSpecialist() {
         return specialist;
