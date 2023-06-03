@@ -43,7 +43,7 @@ public class FavoritesService {
     /**
      * getFavoritesForUser retrieves the list of all specialists that are in a users favorites list
      *
-     * @param profileId
+     * @param favoritesId
      * @return a list of all specialists in a users favorites list
      * @throws NotFoundException If no profiles aren't found in the database for the specific id
      */

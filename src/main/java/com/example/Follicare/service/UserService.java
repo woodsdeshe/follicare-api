@@ -5,7 +5,10 @@ import com.example.Follicare.exceptions.AlreadyExistsException;
 import com.example.Follicare.exceptions.NotFoundException;
 import com.example.Follicare.model.User;
 
+import com.example.Follicare.model.response.LoginResponse;
 import com.example.Follicare.repository.UserRepository;
+import com.example.Follicare.security.JWTUtils;
+import com.example.Follicare.security.MyUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
@@ -26,13 +29,21 @@ public class UserService {
 
     private UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private JWTUtils jwtUtils;
     private AuthenticationManager authenticationManager;
-
+    private MyUserDetails myUserDetails;
 
     @Autowired
-    public UserService(UserRepository userRepository, @Lazy PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository,
+                       @Lazy PasswordEncoder passwordEncoder,
+                       JWTUtils jwtUtils,
+                       @Lazy AuthenticationManager authenticationManager,
+                       @Lazy MyUserDetails myUserDetails) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jwtUtils = jwtUtils;
+        this.authenticationManager = authenticationManager;
+        this.myUserDetails = myUserDetails;
     }
 
     /**
@@ -44,13 +55,27 @@ public class UserService {
      * @return the data for the newly registered user
      */
     public User createUser(User userObject) {
-        System.out.println("service calling createUser ==>");
+        // Check that the name field is not empty when updating the name
+        if (Objects.equals(userObject.getUserName(), "") || userObject.getUserName() == null) {
+            throw new BadRequestException("User name is required");
+        }
+        // Check that the email field is not empty when updating the email
+        if (Objects.equals(userObject.getEmail(), "") || userObject.getEmail() == null) {
+            throw new BadRequestException("User email is required");
+        }
+        // Check that the password field is not empty when updating the password
+        if (Objects.equals(userObject.getPassword(), "") || userObject.getPassword() == null) {
+            throw new BadRequestException("User password is required");
+        }
+        // Check the email does not exist in the database
         if (!userRepository.existsByEmail(userObject.getEmail())) {
+            // Hash the password the user entered
             userObject.setPassword(passwordEncoder.encode(userObject.getPassword()));
+            // Return the data for the newly created user
             return userRepository.save(userObject);
         } else {
-            throw new AlreadyExistsException("user with email address " + userObject.getEmail() +
-                    " already exists");
+            // Throw an error if the email already exists in the database
+            throw new AlreadyExistsException("User with email address " + userObject.getEmail() + " already exists");
         }
     }
 
@@ -58,31 +83,31 @@ public class UserService {
         return userRepository.findUserByEmail(email);
     }
 
-//    /**
-//     * loginUser will log in a user that exists in the database as long as their credentials (email, password) match, and generates a new JTW
-//     * key
-//     *
-//     * @param loginRequest user credentials (email, password)
-//     * @return JWT key
-//     */
-//    public ResponseEntity<?> loginUser(request.LoginRequest loginRequest) {
-//        try {
-//            // Authenicates the user by checking the email and password provided
-//            Authentication authentication = authenticationManager.authenticate(
-//                    new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
-//            // Sets the authenticated user in the SecurityContext
-//            SecurityContextHolder.getContext().setAuthentication(authentication);
-//            // Obtains the user's details after authentication
-//            myUserDetails = (MyUserDetails) authentication.getPrincipal();
-//            // Generate a JWT key for the authenticated user
-//            final String JWT = jwtUtils.generateJwtToken(myUserDetails);
-//            // Return the JWT key
-//            return ResponseEntity.ok(new LoginResponse(JWT));
-//        } catch (Exception e) {
-//            // Returns a 401 status code if the authentication fails
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new LoginResponse("Error : username or password is incorrect"));
-//        }
-//    }
+    /**
+     * loginUser will log in a user that exists in the database as long as their credentials (email, password) match, and generates a new JTW
+     * key
+     *
+     * @param loginRequest user credentials (email, password)
+     * @return JWT key
+     */
+    public ResponseEntity<?> loginUser(LoginRequest loginRequest) {
+        try {
+            // Authenicates the user by checking the email and password provided
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+            // Sets the authenticated user in the SecurityContext
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            // Obtains the user's details after authentication
+            myUserDetails = (MyUserDetails) authentication.getPrincipal();
+            // Generate a JWT key for the authenticated user
+            final String JWT = jwtUtils.generateJwtToken(myUserDetails);
+            // Return the JWT key
+            return ResponseEntity.ok(new LoginResponse(JWT));
+        } catch (Exception e) {
+            // Returns a 401 status code if the authentication fails
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new LoginResponse("Error : username or password is incorrect"));
+        }
+    }
 
     /**
      * getUserById retrieves the user by the user id, if the user id exists. If the user id does not exist, we throw the NotFoundException
