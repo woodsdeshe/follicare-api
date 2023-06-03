@@ -2,6 +2,7 @@ package com.example.Follicare.service;
 
 
 import com.example.Follicare.exceptions.AlreadyExistsException;
+import com.example.Follicare.exceptions.BadRequestException;
 import com.example.Follicare.exceptions.NotFoundException;
 import com.example.Follicare.model.User;
 
