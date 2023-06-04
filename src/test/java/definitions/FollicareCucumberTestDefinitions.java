@@ -54,6 +54,34 @@ public class FollicareCucumberTestDefinitions {
     @LocalServerPort
     String port;
 
+    @Given("a user provides valid registration data")
+    public void aUserProvidesValidRegistrationData() {
+    }
+
+    @When("the user creates an account")
+    public void theUserCreatesAnAccount() {
+
+    }
+
+    @Then("a new user record should be created")
+    public void aNewUserRecordShouldBeCreated() {
+
+    }
+
+    @Given("a user provides valid profile data")
+    public void aUserProvidesValidProfileData() {
+
+    }
+
+    @When("the user updates their profile")
+    public void theUserUpdatesTheirProfile() {
+
+    }
+
+    @Then("the profile information should be updated")
+    public void theProfileInformationShouldBeUpdated() {
+
+    }
 
     @Given("a user has a valid profile and a specialist exists")
     public void aUserHasAValidProfileAndASpecialistExists() {
@@ -61,13 +89,44 @@ public class FollicareCucumberTestDefinitions {
 
     @When("the user adds the specialist to their favorites")
     public void theUserAddsTheSpecialistToTheirFavorites() {
-        
+
     }
 
     @Then("the specialist should be added to the user's favorites list")
     public void theSpecialistShouldBeAddedToTheUserSFavoritesList() {
-        
+
     }
+
+
+    @Given("the user has added specialists to their favorites list")
+    public void theUserHasAddedSpecialistsToTheirFavoritesList() {
+
+    }
+
+    @When("the user requests the list of specialists in their favorites list")
+    public void theUserRequestsTheListOfSpecialistsInTheirFavoritesList() {
+
+    }
+
+    @Then("the system should return a list of specialists in their favorites list")
+    public void theSystemShouldReturnAListOfSpecialistsInTheirFavoritesList() {
+
+    }
+
+    @Given("a user has a specialist in their favorites list")
+    public void aUserHasASpecialistInTheirFavoritesList() {
+
+    }
+
+    @When("the user removes the specialist from their favorites")
+    public void theUserRemovesTheSpecialistFromTheirFavorites() {
+
+    }
+
+    @Then("the specialist should be removed from the user's favorites list")
+    public void theSpecialistShouldBeRemovedFromTheUserSFavoritesList() {
+    }
+
 
     @Given("there are multiple specialists in the system")
     public void thereAreMultipleSpecialistsInTheSystem() {
@@ -191,4 +250,7 @@ public class FollicareCucumberTestDefinitions {
             Assert.assertTrue(resource.getTitle().contains(partialTitle));
         }
     }
+
+
+
 }
