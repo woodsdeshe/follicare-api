@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import java.util.Optional;
 
 @Service
-public class MyProfileService {
+public class ProfilesService {
 
     @Autowired
     private UserRepository userRepository;
@@ -23,7 +23,7 @@ public class MyProfileService {
     private final PasswordEncoder passwordEncoder;
 
     // Purpose is to encrypt password when updating profile
-    public MyProfileService(PasswordEncoder passwordEncoder, UserRepository userRepository) {
+    public ProfilesService(PasswordEncoder passwordEncoder, UserRepository userRepository) {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
     }
@@ -35,7 +35,7 @@ public class MyProfileService {
      * @return Logged-in user's data
      */
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public static User getLoggedInUser() {
+    public User getLoggedInUser() {
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         // Check that there is a logged-in user
         if (userDetails.getUser() == null || userDetails.getUsername().isEmpty() || userDetails.getUsername() == null) {

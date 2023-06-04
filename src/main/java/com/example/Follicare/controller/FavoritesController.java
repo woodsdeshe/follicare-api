@@ -17,7 +17,7 @@ public class FavoritesController {
     private FavoritesService favoritesService;
 
     // Functionality: Returns a lists of specialists in a users favorites list
-    // Path:  http://localhost:8080/api/users/{profileId}/favorites
+    // Path:  http://localhost:8080/api/favorites
 
     public List<Specialist> getFavoritesForProfile(@PathVariable Long profileId) {
         return favoritesService.getListOfSpecialists(profileId);
