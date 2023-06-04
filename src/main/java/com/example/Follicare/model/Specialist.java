@@ -38,6 +38,18 @@ public class Specialist {
     @JoinColumn(name = "favorites_id")
     private Favorites favorites;
 
+    @ManyToMany
+    @JoinTable(name = "user_specialists", joinColumns = @JoinColumn(name = "specialist_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private List<User> specialistList;
+
+    public List<User> getSpecialistList() {
+        return specialistList;
+    }
+
+    public void setSpecialistList(List<User> specialistList) {
+        this.specialistList = specialistList;
+    }
+
     public Favorites getFavorites() {
         return favorites;
     }
