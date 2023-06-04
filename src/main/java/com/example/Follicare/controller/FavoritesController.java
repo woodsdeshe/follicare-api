@@ -19,9 +19,7 @@ public class FavoritesController {
 
     // Functionality: Return a list of specialists that a user has in their favorites list
     // Path: Path:  http://localhost:8080/api/favorites
-    @GetMapping(path = "/favorites")
-    public List<Specialist> getSpecialistsInFavorties() {
-        return
-    }
+
+
 
 }

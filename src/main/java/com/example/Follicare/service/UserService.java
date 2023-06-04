@@ -6,6 +6,7 @@ import com.example.Follicare.exceptions.BadRequestException;
 import com.example.Follicare.exceptions.NotFoundException;
 import com.example.Follicare.model.User;
 
+import com.example.Follicare.model.request.LoginRequest;
 import com.example.Follicare.model.response.LoginResponse;
 import com.example.Follicare.repository.UserRepository;
 import com.example.Follicare.security.JWTUtils;
