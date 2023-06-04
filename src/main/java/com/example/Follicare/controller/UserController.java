@@ -1,8 +1,10 @@
 package com.example.Follicare.controller;
 
 import com.example.Follicare.model.User;
+import com.example.Follicare.model.request.LoginRequest;
 import com.example.Follicare.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -20,5 +22,11 @@ public class UserController {
     public User createUser(@RequestBody User userObject) {
         System.out.println("calling createUser ==>");
         return userService.createUser(userObject);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest){
+        System.out.println("calling loginUser ==>");
+        return userService.loginUser(loginRequest);
     }
 }

@@ -1,8 +1,10 @@
 package com.example.Follicare.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -12,18 +14,19 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(nullable = false)
     private String userName;
 
-    @Column(unique = true)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Column
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
-    @OneToOne
-    private Profiles profiles;
+    @ManyToMany(mappedBy = "specialistList")
+    @JsonIgnore
+    private List<Specialist> listOfSpecialists;
 
     public User() {
     }
@@ -37,6 +40,14 @@ public class User {
 
     public Long getId() {
         return id;
+    }
+
+    public List<Specialist> getListOfSpecialists() {
+        return listOfSpecialists;
+    }
+
+    public void setListOfSpecialists(List<Specialist> listOfSpecialists) {
+        this.listOfSpecialists = listOfSpecialists;
     }
 
     public void setId(Long id) {

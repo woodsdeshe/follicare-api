@@ -3,7 +3,6 @@ package com.example.Follicare.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,34 +14,32 @@ public class Favorites {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
+    @OneToMany(mappedBy = "favorites", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Specialist> specialist;
+
+
+
+    // Many favorites can belong to one profile
     @ManyToOne
     @JoinColumn(name = "profile_id")
-    private Specialist specialist;
+    private Profiles profile;
 
-    @ManyToMany(mappedBy = "favoritesList", cascade = CascadeType.ALL)
-    private List<Profiles> profiles;
 
-    public List<Profiles> getProfiles() {
-        return profiles;
+    public Profiles getProfile() {
+        return profile;
     }
 
-    public void setProfiles(List<Profiles> profiles) {
-        this.profiles = profiles;
-    }
-
-    public Specialist getSpecialist() {
-        return specialist;
-    }
-
-    public void setSpecialist(Specialist specialist) {
-        this.specialist = specialist;
-    }
-
-    public Favorites() {
+    public void setProfile(Profiles profile) {
+        this.profile = profile;
     }
 
     public Favorites(Long id) {
         this.id = id;
+    }
+
+    public Favorites() {
+
     }
 
     public Long getId() {
@@ -53,20 +50,14 @@ public class Favorites {
         this.id = id;
     }
 
-    @ManyToMany
-    @JoinTable(
-            name = "favorites_specialists",
-            joinColumns = @JoinColumn(name = "favorites_id"),
-            inverseJoinColumns = @JoinColumn(name = "specialist_id")
-    )
-    private List<Specialist> specialists;
-
-    public void addSpecialist(Specialist specialist) {
-        if (specialists == null) {
-            specialists = new ArrayList<>();
-        }
-        specialists.add(specialist);
+    public List<Specialist> getSpecialist() {
+        return specialist;
     }
+
+    public void setSpecialist(List<Specialist> specialist) {
+        this.specialist = specialist;
+    }
+
 
     @Override
     public String toString() {

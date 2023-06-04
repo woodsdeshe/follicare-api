@@ -31,24 +31,17 @@ public class Profiles {
     @Column
     private String zipCode;
 
-    @OneToOne(mappedBy = "profiles")
-    @JsonIgnore
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToMany
-    @JoinTable(
-            name = "profile_favorites",
-            joinColumns = @JoinColumn(name = "profile_id"),
-            inverseJoinColumns = @JoinColumn(name = "favorites_id")
-    )
+
+    @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Favorites> favoritesList;
 
+
     public List<Favorites> getFavoritesList() {
-            if (favoritesList == null) {
-                favoritesList = new ArrayList<>();
-            }
-            return favoritesList;
+        return favoritesList;
     }
 
     public void setFavoritesList(List<Favorites> favoritesList) {

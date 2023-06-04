@@ -2,9 +2,11 @@ package com.example.Follicare.service;
 
 
 import com.example.Follicare.exceptions.AlreadyExistsException;
+import com.example.Follicare.exceptions.BadRequestException;
 import com.example.Follicare.exceptions.NotFoundException;
 import com.example.Follicare.model.User;
-import com.example.Follicare.model.request.request;
+
+import com.example.Follicare.model.request.LoginRequest;
 import com.example.Follicare.model.response.LoginResponse;
 import com.example.Follicare.repository.UserRepository;
 import com.example.Follicare.security.JWTUtils;
@@ -55,13 +57,27 @@ public class UserService {
      * @return the data for the newly registered user
      */
     public User createUser(User userObject) {
-        System.out.println("service calling createUser ==>");
+        // Check that the name field is not empty when updating the name
+        if (Objects.equals(userObject.getUserName(), "") || userObject.getUserName() == null) {
+            throw new BadRequestException("User name is required");
+        }
+        // Check that the email field is not empty when updating the email
+        if (Objects.equals(userObject.getEmail(), "") || userObject.getEmail() == null) {
+            throw new BadRequestException("User email is required");
+        }
+        // Check that the password field is not empty when updating the password
+        if (Objects.equals(userObject.getPassword(), "") || userObject.getPassword() == null) {
+            throw new BadRequestException("User password is required");
+        }
+        // Check the email does not exist in the database
         if (!userRepository.existsByEmail(userObject.getEmail())) {
+            // Hash the password the user entered
             userObject.setPassword(passwordEncoder.encode(userObject.getPassword()));
+            // Return the data for the newly created user
             return userRepository.save(userObject);
         } else {
-            throw new AlreadyExistsException("user with email address " + userObject.getEmail() +
-                    " already exists");
+            // Throw an error if the email already exists in the database
+            throw new AlreadyExistsException("User with email address " + userObject.getEmail() + " already exists");
         }
     }
 
@@ -76,7 +92,7 @@ public class UserService {
      * @param loginRequest user credentials (email, password)
      * @return JWT key
      */
-    public ResponseEntity<?> loginUser(request.LoginRequest loginRequest) {
+    public ResponseEntity<?> loginUser(LoginRequest loginRequest) {
         try {
             // Authenicates the user by checking the email and password provided
             Authentication authentication = authenticationManager.authenticate(
