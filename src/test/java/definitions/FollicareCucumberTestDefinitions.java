@@ -9,9 +9,11 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.cucumber.spring.CucumberContextConfiguration;
+import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import org.json.JSONObject;
 import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -42,6 +44,16 @@ public class FollicareCucumberTestDefinitions {
     private List<Resources> resourcesList;
     private ResponseEntity<List<Resources>> resourceResponse;
     private String partialTitle;
+
+    public String getSecurityKey() throws Exception {
+        RequestSpecification request = RestAssured.given();
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("email", "deshe@gmail.com");
+        requestBody.put("password", "pw");
+        request.header("Content-Type", "application/json");
+        response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/users/login");
+        return response.jsonPath().getString("message");
+    }
 
 
 
