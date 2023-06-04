@@ -3,6 +3,7 @@ package com.example.Follicare.controller;
 import com.example.Follicare.model.Specialist;
 import com.example.Follicare.service.FavoritesService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,11 +17,11 @@ public class FavoritesController {
     @Autowired
     private FavoritesService favoritesService;
 
-    // Functionality: Returns a lists of specialists in a users favorites list
-    // Path:  http://localhost:8080/api/favorites
-
-    public List<Specialist> getFavoritesForProfile(@PathVariable Long profileId) {
-        return favoritesService.getListOfSpecialists(profileId);
+    // Functionality: Return a list of specialists that a user has in their favorites list
+    // Path: Path:  http://localhost:8080/api/favorites
+    @GetMapping(path = "/favorites")
+    public List<Specialist> getSpecialistsInFavorties() {
+        return
     }
 
 }

@@ -2,6 +2,8 @@ package com.example.Follicare.service;
 
 import com.example.Follicare.exceptions.AlreadyExistsException;
 import com.example.Follicare.exceptions.NotFoundException;
+import com.example.Follicare.model.Favorites;
+import com.example.Follicare.model.Specialist;
 import com.example.Follicare.model.User;
 import com.example.Follicare.repository.UserRepository;
 import com.example.Follicare.security.MyUserDetails;
@@ -12,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -45,6 +48,7 @@ public class ProfilesService {
         // Return the data for the logged-in user
         return userDetails.getUser();
     }
+
 
     /**
      * updateMyProfile allows a logged-in user to update their information. Updates but you need to generate a new JWT
@@ -99,6 +103,22 @@ public class ProfilesService {
         } else {
             // Throw an error if there is no logged-in user, when you're logged-in...
             throw new NotFoundException("Odd. That wasn't supposed to happen.");
+        }
+    }
+
+    public List<Specialist> getSpecialistsInFavoritesList() {
+        Optional<User> userProfile = userRepository.findById(getLoggedInUser().getId());
+
+        if (userProfile.isPresent()) {
+            List<Specialist> listOfSpecialists = userProfile.get().getListOfSpecialists();
+
+            if (listOfSpecialists.size() > 0) {
+                return listOfSpecialists;
+            } else {
+                throw new NotFoundException("No specialists added to favorites");
+            }
+        } else {
+            throw new NotFoundException("Profile not found");
         }
     }
 }

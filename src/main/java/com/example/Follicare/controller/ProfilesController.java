@@ -1,9 +1,12 @@
 package com.example.Follicare.controller;
 
+import com.example.Follicare.model.Specialist;
 import com.example.Follicare.model.User;
 import com.example.Follicare.service.ProfilesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/profile")
@@ -33,4 +36,6 @@ public class ProfilesController {
     public User deleteUserProfile() {
         return profilesService.deleteMyProfile();
     }
+
+
 }
