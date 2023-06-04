@@ -37,5 +37,11 @@ public class ProfilesController {
         return profilesService.deleteMyProfile();
     }
 
+    // Functionality: Returns a list of specialists in a users' favorites list
+    // Path: Path:  http://localhost:8080/api/profile/favorites
+    @GetMapping(path = "/favorites")
+    public List<Specialist> getAllSpecialistsInFavorites() {
+        return profilesService.getSpecialistsInFavoritesList();
+    }
 
 }
