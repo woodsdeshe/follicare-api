@@ -1,6 +1,13 @@
 package com.example.Follicare.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "profiles")
@@ -23,15 +30,28 @@ public class Profiles {
     private String disorderDescription;
 
     @Column
-    private Character zipCode;
+    private String zipCode;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "favorites_id")
-    private Favorites favorites;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "Favorites",
+            joinColumns = @JoinColumn(name = "profile_id"),
+            inverseJoinColumns = @JoinColumn(name = "specialist_id")
+    )
+    private List<Specialist> favorites;
+
+
+    public List<Specialist> getFavorites() {
+        return favorites;
+    }
+
+    public void setFavorites(List<Specialist> favorites) {
+        this.favorites = favorites;
+    }
 
     public User getUser() {
         return user;
@@ -44,7 +64,7 @@ public class Profiles {
     public Profiles() {
     }
 
-    public Profiles(Long id, String firstName, String lastName, String hairDisorder, String disorderDescription, Character zipCode) {
+    public Profiles(Long id, String firstName, String lastName, String hairDisorder, String disorderDescription, String zipCode) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -93,11 +113,11 @@ public class Profiles {
         this.disorderDescription = disorderDescription;
     }
 
-    public Character getZipCode() {
+    public String getZipCode() {
         return zipCode;
     }
 
-    public void setZipCode(Character zipCode) {
+    public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
     }
 

@@ -13,4 +13,6 @@ public interface SpecialistRepository extends JpaRepository<Specialist, Long> {
     List<Specialist> findAllBySpecialty(String specialty);
 
     List<Specialist>findAllBySpecialtyAndZipCode(String specialty, String zipCode);
-}
+
+    Optional<Specialist> findById(Long specialistId);
+;}

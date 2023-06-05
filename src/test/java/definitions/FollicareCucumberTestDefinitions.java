@@ -3,17 +3,16 @@ package definitions;
 import com.example.Follicare.FollicareApplication;
 import com.example.Follicare.model.Resources;
 import com.example.Follicare.model.Specialist;
-import com.example.Follicare.repository.ResourcesRepository;
-import com.example.Follicare.repository.SpecialistRepository;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.cucumber.spring.CucumberContextConfiguration;
+import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import org.json.JSONObject;
 import org.junit.Assert;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.core.ParameterizedTypeReference;
@@ -21,10 +20,9 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriUtils;
-
-import java.nio.charset.StandardCharsets;
 import java.util.List;
+
+
 
 @CucumberContextConfiguration
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = FollicareApplication.class)
@@ -32,42 +30,94 @@ public class FollicareCucumberTestDefinitions {
 
     private static final String BASE_URL = "http://localhost:";
     private static Response response;
+
+    private static RequestSpecification request;
+
     private static ResponseEntity<String> responseEntity;
     private static List<?> list;
-    private static RequestSpecification request;
     private List<Specialist> specialistList;
     private String specialty;
     private ResponseEntity<List<Specialist>> specialistResponse;
     private String zipCode;
     private List<Resources> resourcesList;
-    private ResponseEntity<List<Resources>> resourceResponse;
-    private String partialTitle;
+
+    private String title;
 
 
 
-    @Autowired
-    private SpecialistRepository specialistRepository;
 
-    @Autowired
-    private ResourcesRepository resourcesRepository;
+    public String getSecurityKey() throws Exception {
+        RequestSpecification request = RestAssured.given();
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("email", "porshaw@gmail.com");
+        requestBody.put("password", "porsha1");
+        request.header("Content-Type", "application/json");
+        response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/users/login");
+        return response.jsonPath().getString("message");
+    }
+
+
 
     @LocalServerPort
     String port;
 
 
-    @Given("a user has a valid profile and a specialist exists")
-    public void aUserHasAValidProfileAndASpecialistExists() {
+    @Given("a user has a valid profile")
+    public void aUserHasAValidProfile() throws Exception {
+        RestAssured.baseURI = BASE_URL;
+        RequestSpecification request = RestAssured.given().header("Authorization", "Bearer " + getSecurityKey());
+        response = request.get(BASE_URL + port + "/api/profile");
     }
 
     @When("the user adds the specialist to their favorites")
-    public void theUserAddsTheSpecialistToTheirFavorites() {
-        
+    public void theUserAddsTheSpecialistToTheirFavorites() throws Exception {
+        RestAssured.baseURI = BASE_URL;
+        RequestSpecification request = RestAssured.given();
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("id", 1L);
+        requestBody.put("first name", "Specialists' first name");
+        requestBody.put("last name", "Specialists' last name");
+        requestBody.put("specialty", "Specialists' specialty");
+        requestBody.put("zipCode", "Specialists' zipcode");
+        requestBody.put("email", "Specialists' email");
+        requestBody.put("phoneNumber", "Specialists' phone number");
+        request.header("Content-Type", "application/json");
+        request.header("Authorization", "Bearer " + getSecurityKey());
+        response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/favorites/1/add");
     }
 
     @Then("the specialist should be added to the user's favorites list")
     public void theSpecialistShouldBeAddedToTheUserSFavoritesList() {
-        
+        Assert.assertEquals(200, response.getStatusCode());
     }
+
+
+    @Given("the user has added specialists to their favorites list")
+    public void theUserHasAddedSpecialistsToTheirFavoritesList() {
+
+    }
+
+    @When("the user requests the list of specialists in their favorites list")
+    public void theUserRequestsTheListOfSpecialistsInTheirFavoritesList() {
+
+    }
+
+    @Then("the system should return a list of specialists in their favorites list")
+    public void theSystemShouldReturnAListOfSpecialistsInTheirFavoritesList() throws Exception {
+
+    }
+
+    @When("the user removes the specialist from their favorites")
+    public void theUserRemovesTheSpecialistFromTheirFavorites() throws Exception {
+        request.header("Content-Type", "application/json");
+        request.header("Authorization", "Bearer " + getSecurityKey());
+        response = request.delete(BASE_URL + port + "/api/favorites/1/remove/1");
+    }
+
+    @Then("the specialist should be removed from the user's favorites list")
+    public void theSpecialistShouldBeRemovedFromTheUserSFavoritesList() {
+    }
+
 
     @Given("there are multiple specialists in the system")
     public void thereAreMultipleSpecialistsInTheSystem() {
@@ -92,7 +142,7 @@ public class FollicareCucumberTestDefinitions {
 
     @When("the user searches for specialists by hair disorder")
     public void theUserSearchesForSpecialistsByHairDisorder() {
-        specialistResponse = new RestTemplate().exchange(BASE_URL + port + "/api/specialists?specialty=" + specialty, HttpMethod.GET, null, new ParameterizedTypeReference<List<Specialist>>() {
+        specialistResponse = new RestTemplate().exchange(BASE_URL + port + "/api/specialists?specialty=" + specialty, HttpMethod.GET, null, new ParameterizedTypeReference<>() {
         });
         specialistList = specialistResponse.getBody();
     }
@@ -114,7 +164,7 @@ public class FollicareCucumberTestDefinitions {
 
     @When("the user searches for specialists by zip code")
     public void theUserSearchesForSpecialistsByZipCode() {
-        specialistResponse = new RestTemplate().exchange(BASE_URL + port + "/api/specialists?zipCode=" + zipCode, HttpMethod.GET, null, new ParameterizedTypeReference<List<Specialist>>() {
+        specialistResponse = new RestTemplate().exchange(BASE_URL + port + "/api/specialists?zipCode=" + zipCode, HttpMethod.GET, null, new ParameterizedTypeReference<>() {
         });
         specialistList = specialistResponse.getBody();
 
@@ -138,7 +188,7 @@ public class FollicareCucumberTestDefinitions {
 
     @When("the user searches for specialists by specialty and zip code")
     public void theUserSearchesForSpecialistsBySpecialtyAndZipCode() {
-        specialistResponse = new RestTemplate().exchange(BASE_URL + port + "/api/specialists?zipCode=" + zipCode + "&specialty=" + specialty, HttpMethod.GET, null, new ParameterizedTypeReference<List<Specialist>>() {
+        specialistResponse = new RestTemplate().exchange(BASE_URL + port + "/api/specialists?zipCode=" + zipCode + "&specialty=" + specialty, HttpMethod.GET, null, new ParameterizedTypeReference<>() {
         });
         specialistList = specialistResponse.getBody();
     }
@@ -171,15 +221,14 @@ public class FollicareCucumberTestDefinitions {
 
     @Given("a user provides a specific topic title")
     public void aUserProvidesASpecificTopicTitle() {
-        String title = "Alopecia";
-        partialTitle = "%" + title + "%";
+        title = "Hair";
     }
 
     @When("the user searches for resources by title")
     public void theUserSearchesForResourcesByTitle() {
-        String encodedPartialTitle = UriUtils.encode(partialTitle, StandardCharsets.UTF_8);
-        String url = BASE_URL + port + "/api/resources?partialTitle=" + encodedPartialTitle;
-        resourceResponse = new RestTemplate().exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<List<Resources>>() {});
+        String url = BASE_URL + port + "/api/resources?partialTitle=";
+        ResponseEntity<List<Resources>> resourceResponse = new RestTemplate().exchange(url + title, HttpMethod.GET, null, new ParameterizedTypeReference<>() {
+        });
         resourcesList = resourceResponse.getBody();
     }
 
@@ -188,7 +237,25 @@ public class FollicareCucumberTestDefinitions {
         Assert.assertNotNull(resourcesList);
         Assert.assertFalse(resourcesList.isEmpty());
         for (Resources resource : resourcesList) {
-            Assert.assertTrue(resource.getTitle().contains(partialTitle));
+            Assert.assertTrue(resource.getTitle().contains(title));
         }
     }
+
+    @Given("a user account is available")
+    public void aUserAccountIsAvailable() throws Exception {
+        RestAssured.baseURI = BASE_URL;
+        RequestSpecification request = RestAssured.given().header("Authorization", "Bearer " + getSecurityKey());
+        response = request.get(BASE_URL + port + "/api/users/1");
+    }
+
+    @When("I go to my profile")
+    public void iGoToMyProfile() {
+        Assert.assertNotNull(String.valueOf(response));
+    }
+
+    @Then("I can see my account details")
+    public void iCanSeeMyAccountDetails() {
+        Assert.assertEquals(200, response.getStatusCode());
+    }
+
 }
