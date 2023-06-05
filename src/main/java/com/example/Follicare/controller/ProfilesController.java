@@ -30,15 +30,15 @@ public class ProfilesController {
     // Functionality: Edit user's details
     // Path: Path:  http://localhost:8080/api/profile
     @PutMapping(path = "")
-    public User updatedProfileDetails(@RequestBody User updatedBody, Profiles updatedProfile) {
-        return profilesService.updateMyProfile(updatedBody, updatedProfile);
+    public void updatedProfileDetails(@RequestBody UserProfileDTO updatedBody) {
+        profilesService.updateUserProfile(updatedBody);
     }
 
     // Functionality: Delete logged-in user's account
     // Path: Path:  http://localhost:8080/api/profile
     @DeleteMapping(path = "")
-    public User deleteUserProfile() {
-        return profilesService.deleteMyProfile();
+    public void deleteUserProfile() {
+        profilesService.deleteUserProfile();
     }
 
     // Functionality: Returns a list of specialists in a users' favorites list

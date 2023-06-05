@@ -83,53 +83,27 @@ public class ProfilesService {
     /**
      * updateMyProfile allows a logged-in user to update their information. Updates but you need to generate a new JWT
      *
-     * @param updatedBody the incoming user data requesting to be updated
+     * @param userProfileDTO the incoming user data requesting to be updated
      * @return the logged-in user's data after the update
      */
-    public User updateMyProfile(User updatedBody, Profiles updatedProfile) {
-        Optional<User> userOptional = userRepository.findById(getLoggedInUserFromContext().getId());
-        Optional<Profiles> profileOptional = profileRepository.findByUser(userOptional);
+    public void updateUserProfile(UserProfileDTO userProfileDTO) {
+        User loggedInUser = getLoggedInUserFromContext();
+        Optional<Profiles> userProfileOptional = profileRepository.findByUser(loggedInUser);
 
-        if (userOptional.isPresent() && profileOptional.isPresent()) {
-            User user = userOptional.get();
-            Profiles profile = profileOptional.get();
+        if (userProfileOptional.isPresent()) {
+            Profiles userProfile = userProfileOptional.get();
 
-            if (userRepository.existsByEmail(updatedBody.getEmail()) && !user.getEmail().equals(updatedBody.getEmail())) {
-                throw new AlreadyExistsException("Email already in use");
-            }
+            // Update the profile attributes
+            userProfile.setFirstName(userProfileDTO.getFirstName());
+            userProfile.setLastName(userProfileDTO.getLastName());
+            userProfile.setHairDisorder(userProfileDTO.getHairDisorder());
+            userProfile.setDisorderDescription(userProfileDTO.getDisorderDescription());
+            userProfile.setZipCode(userProfileDTO.getZipcode());
 
-            if (updatedBody.getPassword() != null && !updatedBody.getPassword().isEmpty()) {
-                user.setPassword(passwordEncoder.encode(updatedBody.getPassword()));
-            }
-            if (updatedBody.getUserName() != null && !updatedBody.getUserName().isEmpty()) {
-                user.setUserName(updatedBody.getUserName());
-            }
-            if (updatedBody.getEmail() != null && !updatedBody.getEmail().isEmpty()) {
-                user.setEmail(updatedBody.getEmail());
-            }
-            if (updatedProfile.getFirstName() != null && !updatedProfile.getFirstName().isEmpty()) {
-                profile.setFirstName(updatedProfile.getFirstName());
-            }
-            if (updatedProfile.getLastName() != null && !updatedProfile.getLastName().isEmpty()) {
-                profile.setLastName(updatedProfile.getLastName());
-            }
-            if (updatedProfile.getHairDisorder() != null && !updatedProfile.getHairDisorder().isEmpty()) {
-                profile.setHairDisorder(updatedProfile.getHairDisorder());
-            }
-            if (updatedProfile.getDisorderDescription() != null && !updatedProfile.getDisorderDescription().isEmpty()) {
-                profile.setDisorderDescription(updatedProfile.getDisorderDescription());
-            }
-            if (updatedProfile.getZipCode() != null && !updatedProfile.getZipCode().isEmpty()) {
-                profile.setZipCode(updatedProfile.getZipCode());
-            }
-
-            // Save both user and profile entities
-            userRepository.save(user);
-            profileRepository.save(profile);
-
-            return user;
+            // Save the updated profile
+            profileRepository.save(userProfile);
         } else {
-            return null;
+            throw new NotFoundException("Profile not found");
         }
     }
 
@@ -140,18 +114,17 @@ public class ProfilesService {
      *
      * @return the deleted data for the logged-in user
      */
-    public User deleteMyProfile() {
-        // Obtain the ID for the logged-in user
-        Optional<User> myProfile = userRepository.findById(getLoggedInUserFromContext().getId());
-        // Check there is data for the logged-in user
-        if (myProfile.isPresent()) {
-            // Remove the logged-in user's data from the database by its ID
-            userRepository.deleteById(getLoggedInUserFromContext().getId());
-            // Return the information of the deleted user
-            return myProfile.get();
+    public void deleteUserProfile() {
+        User loggedInUser = getLoggedInUserFromContext();
+        Optional<Profiles> userProfileOptional = profileRepository.findByUser(loggedInUser);
+
+        if (userProfileOptional.isPresent()) {
+            Profiles userProfile = userProfileOptional.get();
+
+            // Delete the profile
+            profileRepository.delete(userProfile);
         } else {
-            // Throw an error if there is no logged-in user, when you're logged-in...
-            throw new NotFoundException("Odd. That wasn't supposed to happen.");
+            throw new NotFoundException("Profile not found");
         }
     }
 
