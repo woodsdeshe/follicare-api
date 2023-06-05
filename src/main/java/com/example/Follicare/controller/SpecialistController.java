@@ -19,29 +19,45 @@ public class SpecialistController {
     private SpecialistService specialistService;
 
 
-    // Functionality: Returns a list of all specialists
-    // Path: http://localhost:8080/api/specialists
+    /**
+     * Returns a list of all specialists.
+     *
+     * @return List of all specialists
+     */
     @GetMapping(path = "")
     public List<Specialist> getAllSpecialists(){
         return specialistService.getAllSpecialists();
     }
 
-    // Functionality: Returns a list of specialists by specialty
-    // Path: http://localhost:8080/api/specialists?hairDisorder={hairDisorder};
+    /**
+     * Returns a list of specialists based on the specified specialty.
+     *
+     * @param specialty Specialty of the specialists
+     * @return List of specialists matching the specified specialty
+     */
     @GetMapping(params = "specialty")
     public List<Specialist> getSpecialistBySpecialty(@RequestParam("specialty") String specialty) {
         return specialistService.getSpecialistBySpecialty(specialty);
     }
 
-    // Functionality: Returns a list of specialists by zip code
-    // Path: http://localhost:8080/api/specialists?zipCode={zipCode}
+    /**
+     * Returns a list of specialists based on the specified zip code.
+     *
+     * @param zipCode Zip code of the specialists
+     * @return List of specialists matching the specified zip code
+     */
     @GetMapping(params = "zipCode")
     public List<Specialist> getSpecialistByZipCode(@RequestParam("zipCode") String zipCode) {
         return specialistService.getSpecialistByZipCode(zipCode);
     }
 
-    // Functionality: Returns a list of specialists by zip code and specialty
-    // Path: http://localhost:8080/api/specialists?zipCode={zipCode}&specialty={specialty}
+    /**
+     * Returns a list of specialists based on the specified zip code and specialty.
+     *
+     * @param specialty Specialty of the specialists
+     * @param zipCode Zip code of the specialists
+     * @return List of specialists matching the specified zip code and specialty
+     */
     @GetMapping(params = {"specialty", "zipCode"})
     public List<Specialist> getSpecialistByZipCodeAndSpecialty(@RequestParam("specialty") String specialty,
                                                                @RequestParam("zipCode") String zipCode) {
