@@ -43,7 +43,7 @@ During the project, the following unsolved problems or major challenges were fac
 - Accuracy of tests: There were hurdles involving the accuracy of tests, as the previous system showed passing tests when they were not passing. Double-checking was required to validate the tests once a working path was completed.
 
 ## User Stories
-User stories can be found in the [User Stories document](link-to-user-stories-document).
+User stories can be found in the [User Stories Wiki](https://github.com/woodsdeshe/follicare-api/wiki/User-Stories).
 
 ## ERD Diagram
 The ERD diagram for Follicare can be accessed at [link-to-ERD-diagram](link-to-ERD-diagram).
