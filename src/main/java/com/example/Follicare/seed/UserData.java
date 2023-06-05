@@ -36,9 +36,10 @@ public class UserData implements CommandLineRunner {
         loadUserData();
     }
 
+    /**
+     * Loads seed data into the database.
+     */
     private void loadUserData() {
-
-        //  Seed data for initial setup
             User porsha = new User(1L, "PorshaW", "porshaw@gmail.com", "porsha1");
             User bob = new User(2L, "BoBWhit", "BobW@gmail.com", "bob2");
             User kandi = new User(3L, "Kandi1", "kandib@gmail.com", "excape4");
@@ -60,7 +61,6 @@ public class UserData implements CommandLineRunner {
             profileRepository.save(kandiProfile);
 
 
-            // Seed data for initial setup
             Specialist specialist1 = new Specialist(1L, "Brandy", "Singer", "Alopecia Areata", "49505", "brandy@gmail.com", "123-456-7809");
             specialistRepository.save(specialist1);
             Specialist specialist2 = new Specialist(2L, "Byron", "Test", "Alopecia Areata", "49502", "byron@gmail.com", "987-654-3120");
@@ -70,7 +70,6 @@ public class UserData implements CommandLineRunner {
 
 
 
-        // Create the favorites list
         List<Specialist> porshaFavoritesList = new ArrayList<>();
         List<Specialist> bobFavoritesList = new ArrayList<>();
         List<Specialist> kandiFavoritesList = new ArrayList<>();
@@ -82,12 +81,12 @@ public class UserData implements CommandLineRunner {
 
         kandiFavoritesList.add(specialist1);
 
-        // Set the favorites list in  user entity
+
         porsha.setFavoritesList(porshaFavoritesList);
         bob.setFavoritesList(bobFavoritesList);
         kandi.setFavoritesList(kandiFavoritesList);
 
-        // Save the updated user entity
+
         userService.updateUser(porsha);
         userService.updateUser(bob);
         userService.updateUser(kandi);

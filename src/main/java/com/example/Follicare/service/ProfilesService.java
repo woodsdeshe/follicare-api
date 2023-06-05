@@ -28,7 +28,6 @@ public class ProfilesService {
 
     private final PasswordEncoder passwordEncoder;
 
-    // Purpose is to encrypt password when updating profile
     public ProfilesService(PasswordEncoder passwordEncoder, UserRepository userRepository) {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;

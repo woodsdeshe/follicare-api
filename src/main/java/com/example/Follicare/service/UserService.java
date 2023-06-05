@@ -59,26 +59,19 @@ public class UserService {
      * @return the data for the newly registered user
      */
     public User createUser(User userObject) {
-        // Check that the name field is not empty when updating the name
         if (Objects.equals(userObject.getUserName(), "") || userObject.getUserName() == null) {
             throw new BadRequestException("User name is required");
         }
-        // Check that the email field is not empty when updating the email
         if (Objects.equals(userObject.getEmail(), "") || userObject.getEmail() == null) {
             throw new BadRequestException("User email is required");
         }
-        // Check that the password field is not empty when updating the password
         if (Objects.equals(userObject.getPassword(), "") || userObject.getPassword() == null) {
             throw new BadRequestException("User password is required");
         }
-        // Check the email does not exist in the database
         if (!userRepository.existsByEmail(userObject.getEmail())) {
-            // Hash the password the user entered
             userObject.setPassword(passwordEncoder.encode(userObject.getPassword()));
-            // Return the data for the newly created user
             return userRepository.save(userObject);
         } else {
-            // Throw an error if the email already exists in the database
             throw new AlreadyExistsException("User with email address " + userObject.getEmail() + " already exists");
         }
     }
@@ -96,19 +89,13 @@ public class UserService {
      */
     public ResponseEntity<?> loginUser(LoginRequest loginRequest) {
         try {
-            // Authenicates the user by checking the email and password provided
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
-            // Sets the authenticated user in the SecurityContext
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            // Obtains the user's details after authentication
             myUserDetails = (MyUserDetails) authentication.getPrincipal();
-            // Generate a JWT key for the authenticated user
             final String JWT = jwtUtils.generateJwtToken(myUserDetails);
-            // Return the JWT key
             return ResponseEntity.ok(new LoginResponse(JWT));
         } catch (Exception e) {
-            // Returns a 401 status code if the authentication fails
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new LoginResponse("Error : username or password is incorrect"));
         }
     }
@@ -120,23 +107,29 @@ public class UserService {
      * @return the optional of the user
      */
     public Optional<User> getUserById(Long userId) {
-        // Obtain a user's data by its ID
         Optional<User> user = userRepository.findById(userId);
-        // Check that the targeted user is found
         if (user.isPresent()) {
-            // Return the targeted user's data
             return user;
         } else {
-            // Throw an error if the user data is not found by its ID
             throw new NotFoundException("User with id " + userId + " not found");
         }
     }
 
+    /**
+     * Updates a user in the database.
+     *
+     * @param user The user to update
+     */
     public void updateUser(User user) {
         userRepository.save(user);
     }
 
-
+    /**
+     * Adds a specialist to the favorites list of a user.
+     *
+     * @param userId     The ID of the user
+     * @param specialist The specialist to add to the favorites list
+     */
     public void addSpecialistToFavorites(Long userId, Specialist specialist) {
         Optional<User> optionalUser = getUserById(userId);
 
@@ -148,6 +141,12 @@ public class UserService {
         });
     }
 
+    /**
+     * Removes a specialist from the favorites list of a user.
+     *
+     * @param userId       The ID of the user
+     * @param specialistId The ID of the specialist to remove from the favorites list
+     */
     public void removeSpecialistFromFavorites(Long userId, Long specialistId) {
         Optional<User> optionalUser = getUserById(userId);
 
@@ -158,6 +157,4 @@ public class UserService {
             userRepository.save(user);
         });
     }
-
-
 }

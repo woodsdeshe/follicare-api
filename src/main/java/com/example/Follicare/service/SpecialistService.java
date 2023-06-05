@@ -28,12 +28,9 @@ public class SpecialistService {
      */
     public List<Specialist> getAllSpecialists() {
         List<Specialist> allSpecialists = specialistRepository.findAll();
-        //Check there is a list of specialists
         if (allSpecialists.size() > 0) {
-            // Returns all the specialists in the database
             return allSpecialists;
         } else {
-            //Throws an error when there are no businesses in the database
             throw new NotFoundException("No specialists found");
         }
     }
@@ -46,43 +43,48 @@ public class SpecialistService {
      * @throws NotFoundException If no specialists are found for the given specialty.
      */
     public List<Specialist> getSpecialistBySpecialty(String specialty) {
-        // Search for specialist by specialty
         List<Specialist> specialist = specialistRepository.findAllBySpecialty(specialty);
 
         if (specialist.isEmpty()) {
-            // Throw an error if the specialist is not found in the database
             throw new NotFoundException("Specialist with " + specialty + " specialty not found");
         } else {
-            // If specialist is found, return the specialists' data
             return specialist;
         }
 
     }
 
+    /**
+     * Retrieves a list of specialists based on the provided zip code.
+     *
+     * @param zipCode The zip code to search for
+     * @return A list of specialists in the given zip code
+     * @throws NotFoundException if no specialist is found in the given zip code
+     */
     public List<Specialist> getSpecialistByZipCode(String zipCode) {
-        // Search for specialist by zip code
         List<Specialist> specialist = specialistRepository.findAllByZipCode(zipCode);
 
         if (specialist.isEmpty()) {
-            // Throw an error if the specialist is not found in the database
             throw new NotFoundException("Specialist in zipcode " + zipCode + " not found");
         } else {
-            // If specialist is found, return the specialists' data
             return specialist;
         }
     }
 
+    /**
+     * Retrieves a list of specialists based on the provided zip code and specialty.
+     *
+     * @param zipCode   The zip code to search for
+     * @param specialty The specialty to search for
+     * @return A list of specialists in the given zip code and specialty
+     * @throws NotFoundException if no specialist is found in the given zip code or specialty
+     */
     public List<Specialist> getSpecialistByZipCodeAndSpecialty(String zipCode, String specialty) {
-        //Search for specialist by zipcode and specialty
         List<Specialist> specialist = specialistRepository.findAllBySpecialtyAndZipCode(specialty, zipCode);
 
         if (specialist.isEmpty()) {
-            // Throw an error if the specialist is not found in the database
             throw new NotFoundException("Specialist in zipcode " + zipCode + " or specialty " + specialty + " not found");
         } else {
-            // If specialist is found, return the specialists' data
             return specialist;
         }
     }
-
 }
