@@ -23,7 +23,9 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 
 
-
+/**
+ * Cucumber test definitions for the Follicare application.
+ */
 @CucumberContextConfiguration
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = FollicareApplication.class)
 public class FollicareCucumberTestDefinitions {
@@ -45,7 +47,12 @@ public class FollicareCucumberTestDefinitions {
 
 
 
-
+    /**
+     * Retrieves the security key for authentication.
+     *
+     * @return The security key
+     * @throws Exception if an exception occurs during the request
+     */
     public String getSecurityKey() throws Exception {
         RequestSpecification request = RestAssured.given();
         JSONObject requestBody = new JSONObject();
