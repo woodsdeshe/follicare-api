@@ -4,6 +4,7 @@ package com.example.Follicare.service;
 import com.example.Follicare.exceptions.AlreadyExistsException;
 import com.example.Follicare.exceptions.BadRequestException;
 import com.example.Follicare.exceptions.NotFoundException;
+import com.example.Follicare.model.Specialist;
 import com.example.Follicare.model.User;
 
 import com.example.Follicare.model.request.LoginRequest;
@@ -23,6 +24,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -133,4 +135,14 @@ public class UserService {
     public void updateUser(User user) {
         userRepository.save(user);
     }
+
+
+    public void addSpecialistToFavorites(User user, Specialist specialist) {
+        List<Specialist> favoritesList = user.getFavoritesList();
+        favoritesList.add(specialist);
+        user.setFavoritesList(favoritesList);
+        userRepository.save(user);
+    }
+
+
 }
