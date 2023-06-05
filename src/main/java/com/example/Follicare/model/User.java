@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -24,12 +25,15 @@ public class User {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
-
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
-    private Profiles profiles;
+    private Profiles profile;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private List<Specialist> favoritesList;
 
     public User() {
+        favoritesList = new ArrayList<>();
     }
 
     public User(Long id, String userName, String email, String password) {
@@ -37,6 +41,18 @@ public class User {
         this.userName = userName;
         this.email = email;
         this.password = password;
+    }
+
+    public void addFavoriteSpecialist(Specialist specialist) {
+        favoritesList.add(specialist);
+    }
+
+    public void removeFavoriteSpecialist(Specialist specialist) {
+        favoritesList.remove(specialist);
+    }
+
+    public List<Specialist> getFavoritesList() {
+        return favoritesList;
     }
 
     public Long getId() {
@@ -69,6 +85,18 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setFavoritesList(List<Specialist> favoritesList) {
+        this.favoritesList = favoritesList;
+    }
+
+    public Profiles getProfile() {
+        return profile;
+    }
+
+    public void setProfile(Profiles profile) {
+        this.profile = profile;
     }
 
     @Override

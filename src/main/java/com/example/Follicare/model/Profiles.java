@@ -34,7 +34,6 @@ public class Profiles {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    @JsonIgnoreProperties("hibernateLazyInitializer")
     private User user;
 
     @ManyToMany(cascade = CascadeType.ALL)

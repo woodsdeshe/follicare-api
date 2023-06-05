@@ -56,10 +56,6 @@ public class UserData implements CommandLineRunner {
             bobProfile.setUser(bob);
             kandiProfile.setUser(kandi);
 
-            Profiles porshaSavedProfile = profileRepository.save(porshaProfile);
-            Profiles bobSavedProfile = profileRepository.save(bobProfile);
-            Profiles kandiSavedProfile =profileRepository.save(kandiProfile);
-
 
             // Seed data for initial setup
             Specialist specialist1 = new Specialist(1L, "Brandy", "Singer", "Alopecia Areata", "49505", "brandy@gmail.com", "123-456-7809");
@@ -70,16 +66,28 @@ public class UserData implements CommandLineRunner {
             specialistRepository.save(specialist3);
 
 
-//        // Create the favorites list
-//        List<Specialist> porshaFavoritesList = new ArrayList<>();
-//        porshaFavoritesList.add(specialist1);
-//        porshaFavoritesList.add(specialist2);
-//
-//        // Set the favorites list in Porsha's profile
-//        porshaProfile.setFavorites(porshaFavoritesList);
-//
-//        // Save the updated profile
-//        profileRepository.save(porshaProfile);
+
+        // Create the favorites list
+        List<Specialist> porshaFavoritesList = new ArrayList<>();
+        List<Specialist> bobFavoritesList = new ArrayList<>();
+        List<Specialist> kandiFavoritesList = new ArrayList<>();
+
+        porshaFavoritesList.add(specialist1);
+        porshaFavoritesList.add(specialist2);
+
+        bobFavoritesList.add(specialist3);
+
+        kandiFavoritesList.add(specialist1);
+
+        // Set the favorites list in  user entity
+        porsha.setFavoritesList(porshaFavoritesList);
+        bob.setFavoritesList(bobFavoritesList);
+        kandi.setFavoritesList(kandiFavoritesList);
+
+        // Save the updated user entity
+        userService.updateUser(porsha);
+        userService.updateUser(bob);
+        userService.updateUser(kandi);
 
 
         Resources resource1 = new Resources();
