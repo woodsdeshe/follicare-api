@@ -18,30 +18,40 @@ public class ProfilesController {
     @Autowired
     private ProfilesService profilesService;
 
-    // Functionality: Returns logged-in user's details
-    // Path: Path:  http://localhost:8080/api/profile
-
+    /**
+     * Returns the details of the logged-in user.
+     *
+     * @return User profile details
+     */
     @GetMapping("")
     public UserProfileDTO getUserProfile() {
         return profilesService.getUserProfile();
     }
 
-    // Functionality: Edit user's details
-    // Path: Path:  http://localhost:8080/api/profile
+    /**
+     * Updates the details of the logged-in user.
+     *
+     * @param updatedBody Updated user profile details
+     */
     @PutMapping(path = "")
     public void updatedProfileDetails(@RequestBody UserProfileDTO updatedBody) {
         profilesService.updateUserProfile(updatedBody);
     }
 
-    // Functionality: Delete logged-in user's account
-    // Path: Path:  http://localhost:8080/api/profile
+    /**
+     * Deletes the account of the logged-in user.
+     */
     @DeleteMapping(path = "")
     public void deleteUserProfile() {
         profilesService.deleteUserProfile();
     }
 
-    // Functionality: Returns a list of specialists in a users' favorites list
-    // Path: Path:  http://localhost:8080/api/profile/favorites
+    /**
+     * Returns a list of specialists in the favorites list of a user.
+     *
+     * @param profileId ID of the user profile
+     * @return List of specialists in the favorites list
+     */
     @GetMapping(path = "/favorites/{profileId}")
     public List<Specialist> getAllSpecialistsInFavorites(@PathVariable Long profileId) {
         return profilesService.getSpecialistsInFavorites(profileId);
