@@ -19,15 +19,22 @@ public class ResourcesController {
     @Autowired
     private ResourcesService resourcesService;
 
-    // Functionality: Returns a list of all resources
-    // Path: http://localhost:8080/api/resources
+    /**
+     * Returns a list of all resources.
+     *
+     * @return List of all resources
+     */
     @GetMapping(path = "/all")
     public List<Resources> getAllResources() {
         return resourcesService.getAllResources();
     }
 
-    // Functionality: Returns a list of all resources containing title
-    // Path: http://localhost:8080/api/resources?titleLike={title}
+    /**
+     * Returns a list of resources containing the specified partial title.
+     *
+     * @param partialTitle Partial title to search for
+     * @return List of resources matching the partial title
+     */
     @GetMapping
     public List<Resources> getResourcesByPartialTitle(@RequestParam("partialTitle") String partialTitle) {
         String encodedPartialTitle = UriUtils.encode(partialTitle, StandardCharsets.UTF_8);
