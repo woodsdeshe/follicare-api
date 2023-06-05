@@ -60,28 +60,24 @@ To install and set up the dependencies required for the project, follow these in
 
 ## API Endpoints
 The following REST API endpoints are available in Follicare:
+Sure! Here are the API endpoints in a table format:
 
-**User Management:**
-- POST /auth/register: User creates an account (public)
-- POST /auth/login: User logs into their account (public)
+| Request Type | URL                                          | Functionality                                                                                     | Access  |
+|--------------|----------------------------------------------|--------------------------------------------------------------------------------------------------|---------|
+| POST         | /auth/register                               | User creates an account                                                                           | Public  |
+| POST         | /auth/login                                  | User logs into their account                                                                      | Public  |
+| PUT          | /profile                                     | User updates their profile                                                                        | Private |
+| GET          | /auth/users/{profileId}/favorites            | User gets a list of specialists in their favorites list                                           | Private |
+| POST         | /auth/users/{profileId}/favorites            | User adds a specialist to their favorites list                                                    | Private |
+| DELETE       | /auth/users/{profileId}/favorites/{specialistId} | User removes a specialist from their favorites list                                             | Private |
+| GET          | /specialists                                 | User retrieves a list of all specialists                                                          | Public  |
+| GET          | /specialists?hairDisorder={hairDisorder}     | User retrieves a list of specialists based on their specialty                                     | Public  |
+| GET          | /specialists?zipcode={zipcode}               | User retrieves a list of specialists based on the zipcode                                         | Public  |
+| GET          | /specialists?hairDisorder={hairDisorder}&zipcode={zipcode} | User retrieves a list of specialists based on their specialty and zipcode               | Public  |
+| GET          | /resources/all                               | User retrieves a list of all topics                                                                | Public  |
+| GET          | /resources?partialTitle={partialTitle}       | User retrieves a list of topics based on the partial topic title                                  | Public  |
 
-**Profile Management:**
-- PUT /profile: User updates their profile (private)
-
-**Favorites Management:**
-- GET /auth/users/{profileId}/favorites: User gets a list of specialists in their favorites list (private)
-- POST /auth/users/{profileId}/favorites: User adds a specialist to their favorites list (private)
-- DELETE /auth/users/{profileId}/favorites/{specialistId}: User removes a specialist from their favorites list (private)
-
-**Specialist Management:**
-- GET /specialists: User retrieves a list of all specialists (public)
-- GET /specialists?hairDisorder={hairDisorder}: User retrieves a list of specialists based on their specialty (public)
-- GET /specialists?zipcode={zipcode}: User retrieves a list of specialists based on the zipcode (public)
-- GET /specialists?hairDisorder={hairDisorder}&zipcode={zipcode}: User retrieves a list of specialists based on their specialty and zipcode (public)
-
-**Resource Management:**
-- GET /resources/all: User retrieves a list of all topics (public)
-- GET /resources?partialTitle={partialTitle}: User retrieves a list of topics based on the partial topic title (public)
+Please note that the access level specifies whether the endpoint is public (accessible to all) or private (requires authentication).
 
 Please refer to the API documentation for detailed information on request types and functionality.
 
