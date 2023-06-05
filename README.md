@@ -7,6 +7,7 @@
 - [Unsolved Problems or Major Hurdles](#unsolved-problems-or-major-hurdles)
 - [User Stories](#user-stories)
 - [ERD Diagram](#erd-diagram)
+- [Wireframes](#wireframes)
 - [Planning Documentation](#planning-documentation)
 - [Installation Instructions for Dependencies](#installation-instructions-for-dependencies)
 - [API Endpoints](#api-endpoints)
@@ -46,7 +47,10 @@ During the project, the following unsolved problems or major challenges were fac
 User stories can be found in the [User Stories Wiki](https://github.com/woodsdeshe/follicare-api/wiki/User-Stories).
 
 ## ERD Diagram
-The ERD diagram for Follicare can be accessed at [link-to-ERD-diagram](https://github.com/woodsdeshe/follicare-api/blob/main/src/main/java/com/example/Follicare/Follicare%20Wireframe.png).
+The ERD diagram for Follicare can be accessed at [here](https://dbdiagram.io/d/647766c2722eb77494277f56).
+
+## Wireframes
+The wireframes for Follicare can be accessed [here](https://github.com/woodsdeshe/follicare-api/blob/main/src/main/java/com/example/Follicare/Follicare%20Wireframe.png)
 
 ## Planning Documentation
 The detailed scope, schedule, and deliverables breakdown of the project can be found in the [GitHub Project](link-to-GitHub-project).
