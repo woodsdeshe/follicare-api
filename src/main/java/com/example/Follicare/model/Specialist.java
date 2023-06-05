@@ -37,6 +37,10 @@ public class Specialist {
     @ManyToMany(mappedBy = "favorites")
     private List<Profiles> profiles;
 
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     public Specialist() {
     }
 

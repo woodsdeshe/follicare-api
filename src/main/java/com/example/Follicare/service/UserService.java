@@ -129,4 +129,8 @@ public class UserService {
             throw new NotFoundException("User with id " + userId + " not found");
         }
     }
+
+    public void updateUser(User user) {
+        userRepository.save(user);
+    }
 }
