@@ -144,5 +144,10 @@ public class UserService {
         userRepository.save(user);
     }
 
-
+    public void removeSpecialistFromFavorites(User user, Long specialistId) {
+        List<Specialist> favoritesList = user.getFavoritesList();
+        favoritesList.removeIf(specialist -> specialist.getId().equals(specialistId));
+        user.setFavoritesList(favoritesList);
+        userRepository.save(user);
+    }
 }
