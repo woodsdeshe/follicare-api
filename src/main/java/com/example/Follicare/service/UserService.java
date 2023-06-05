@@ -138,16 +138,24 @@ public class UserService {
 
 
     public void addSpecialistToFavorites(User user, Specialist specialist) {
-        List<Specialist> favoritesList = user.getFavoritesList();
-        favoritesList.add(specialist);
-        user.setFavoritesList(favoritesList);
-        userRepository.save(user);
+        if (user == null) {
+            throw new NotFoundException("User not found");
+        } else {
+            List<Specialist> favoritesList = user.getFavoritesList();
+            favoritesList.add(specialist);
+            user.setFavoritesList(favoritesList);
+            userRepository.save(user);
+        }
     }
 
     public void removeSpecialistFromFavorites(User user, Long specialistId) {
-        List<Specialist> favoritesList = user.getFavoritesList();
-        favoritesList.removeIf(specialist -> specialist.getId().equals(specialistId));
-        user.setFavoritesList(favoritesList);
-        userRepository.save(user);
+        if (user == null) {
+            throw new NotFoundException("User not found");
+        } else {
+            List<Specialist> favoritesList = user.getFavoritesList();
+            favoritesList.removeIf(specialist -> specialist.getId().equals(specialistId));
+            user.setFavoritesList(favoritesList);
+            userRepository.save(user);
+        }
     }
 }
