@@ -137,25 +137,27 @@ public class UserService {
     }
 
 
-    public void addSpecialistToFavorites(User user, Specialist specialist) {
-        if (user == null) {
-            throw new NotFoundException("User not found");
-        } else {
+    public void addSpecialistToFavorites(Long userId, Specialist specialist) {
+        Optional<User> optionalUser = getUserById(userId);
+
+        optionalUser.ifPresent(user -> {
             List<Specialist> favoritesList = user.getFavoritesList();
             favoritesList.add(specialist);
             user.setFavoritesList(favoritesList);
             userRepository.save(user);
-        }
+        });
     }
 
-    public void removeSpecialistFromFavorites(User user, Long specialistId) {
-        if (user == null) {
-            throw new NotFoundException("User not found");
-        } else {
+    public void removeSpecialistFromFavorites(Long userId, Long specialistId) {
+        Optional<User> optionalUser = getUserById(userId);
+
+        optionalUser.ifPresent(user -> {
             List<Specialist> favoritesList = user.getFavoritesList();
             favoritesList.removeIf(specialist -> specialist.getId().equals(specialistId));
             user.setFavoritesList(favoritesList);
             userRepository.save(user);
-        }
+        });
     }
+
+
 }

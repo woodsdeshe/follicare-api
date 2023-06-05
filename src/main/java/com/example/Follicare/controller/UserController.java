@@ -50,4 +50,17 @@ public class UserController {
         }
         return user.get().getFavoritesList();
     }
+
+    @PostMapping("/{userId}/favorites")
+    public void addSpecialistsToFavorites(@PathVariable Long userId, @RequestBody Specialist specialist) {
+        Optional<User> user = userService.getUserById(userId);
+
+        userService.addSpecialistToFavorites(userId, specialist);
+    }
+
+    @DeleteMapping("/{userId}/favorites/{specialistId}")
+    public String removeSpecialistFromFavorites(@PathVariable Long userId, @PathVariable Long specialistId) {
+        userService.removeSpecialistFromFavorites(userId, specialistId);
+        return "Specialist removed from favorites list";
+    }
 }
