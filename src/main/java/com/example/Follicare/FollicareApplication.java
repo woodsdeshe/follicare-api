@@ -10,4 +10,5 @@ public class FollicareApplication {
 		SpringApplication.run(FollicareApplication.class, args);
 	}
 
+
 }
