@@ -46,7 +46,7 @@ During the project, the following unsolved problems or major challenges were fac
 User stories can be found in the [User Stories Wiki](https://github.com/woodsdeshe/follicare-api/wiki/User-Stories).
 
 ## ERD Diagram
-The ERD diagram for Follicare can be accessed at [link-to-ERD-diagram](link-to-ERD-diagram).
+The ERD diagram for Follicare can be accessed at [link-to-ERD-diagram](https://github.com/woodsdeshe/follicare-api/blob/main/src/main/java/com/example/Follicare/Follicare%20Wireframe.png).
 
 ## Planning Documentation
 The detailed scope, schedule, and deliverables breakdown of the project can be found in the [GitHub Project](link-to-GitHub-project).
