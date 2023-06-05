@@ -52,10 +52,10 @@ public class UserController {
     }
 
     @PostMapping("/{userId}/favorites")
-    public void addSpecialistsToFavorites(@PathVariable Long userId, @RequestBody Specialist specialist) {
+    public String addSpecialistsToFavorites(@PathVariable Long userId, @RequestBody Specialist specialist) {
         Optional<User> user = userService.getUserById(userId);
-
         userService.addSpecialistToFavorites(userId, specialist);
+        return "Specialist added to favorites list";
     }
 
     @DeleteMapping("/{userId}/favorites/{specialistId}")

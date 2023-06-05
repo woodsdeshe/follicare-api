@@ -22,9 +22,8 @@ public class ProfilesController {
     // Path: Path:  http://localhost:8080/api/profile
 
     @GetMapping("")
-    public ResponseEntity<UserProfileDTO> getUserProfile() {
-        UserProfileDTO userProfileDTO = profilesService.getUserProfile();
-        return ResponseEntity.ok(userProfileDTO);
+    public UserProfileDTO getUserProfile() {
+        return profilesService.getUserProfile();
     }
 
     // Functionality: Edit user's details

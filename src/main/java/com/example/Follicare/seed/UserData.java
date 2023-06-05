@@ -14,8 +14,8 @@ import java.util.List;
 @Component
 public class UserData implements CommandLineRunner {
 
-//    @Autowired
-//    UserRepository userRepository;
+    @Autowired
+    UserRepository userRepository;
 
     @Autowired
     UserService userService;
@@ -23,8 +23,7 @@ public class UserData implements CommandLineRunner {
     @Autowired
     ProfileRepository profileRepository;
 
-//    @Autowired
-//    FavoritesRepository favoritesRepository;
+
 
     @Autowired
     SpecialistRepository specialistRepository;
@@ -39,7 +38,7 @@ public class UserData implements CommandLineRunner {
 
     private void loadUserData() {
 
-//             Seed data for initial setup
+        //  Seed data for initial setup
             User porsha = new User(1L, "PorshaW", "porshaw@gmail.com", "porsha1");
             User bob = new User(2L, "BoBWhit", "BobW@gmail.com", "bob2");
             User kandi = new User(3L, "Kandi1", "kandib@gmail.com", "excape4");
@@ -55,6 +54,10 @@ public class UserData implements CommandLineRunner {
             porshaProfile.setUser(porsha);
             bobProfile.setUser(bob);
             kandiProfile.setUser(kandi);
+
+            profileRepository.save(porshaProfile);
+            profileRepository.save(bobProfile);
+            profileRepository.save(kandiProfile);
 
 
             // Seed data for initial setup
