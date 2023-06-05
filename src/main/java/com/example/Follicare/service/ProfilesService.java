@@ -128,18 +128,29 @@ public class ProfilesService {
         }
     }
 
-    public List<Specialist> getSpecialistsInFavoritesList() {
-        Optional<User> userProfile = userRepository.findById(getLoggedInUserFromContext().getId());
-
-        if (userProfile.isPresent()) {
-            List<Specialist> listOfSpecialists = userProfile.get().getListOfSpecialists();
-
-            if (listOfSpecialists.size() > 0) {
-                return listOfSpecialists;
+    /**
+     * getJobsIAppliedFor returns a list of jobs the logged-in user has applied for. If no jobs are found, a NotFoundException is thrown. If
+     * the profile is not found, a NotFoundException is thrown as well.
+     *
+     * @return a list of user objects that have applied to the job listing.
+     */
+    public List<Specialist> getSpecialistInFavorites() {
+        // Obtain the ID for the logged-in user
+        Optional<User> myProfile = userRepository.findById(getLoggedInUserFromContext().getId());
+        // Check there is data for the logged-in user
+        if (myProfile.isPresent()) {
+            // Obtain the list of jobs the logged-in user has applied for
+            List<Specialist> listOfSpecialistsAdded = myProfile.get().getListOfSpecialists();
+            // Check that the list of jobs applied to has at least one job available
+            if (listOfSpecialistsAdded.size() > 0) {
+                // Return the list of jobs the logged-in user has applied to
+                return listOfSpecialistsAdded;
             } else {
+                // Throw an error if the list of the logged-in user has applied to is empty
                 throw new NotFoundException("No specialists added to favorites");
             }
         } else {
+            // Throw an error if there is no logged-in user, when you're logged-in...
             throw new NotFoundException("Profile not found");
         }
     }

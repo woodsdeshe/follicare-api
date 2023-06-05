@@ -45,7 +45,7 @@ public class ProfilesController {
     // Path: Path:  http://localhost:8080/api/profile/favorites
     @GetMapping(path = "/favorites")
     public List<Specialist> getAllSpecialistsInFavorites() {
-        return profilesService.getSpecialistsInFavoritesList();
+        return profilesService.getSpecialistInFavorites();
     }
 
 }
