@@ -34,16 +34,33 @@ public class SecurityConfiguration {
         this.myUserDetailsService = myUserDetailsService;
     }
 
+    /**
+     * Creates a bean for the JWTRequestFilter.
+     *
+     * @return The JWTRequestFilter bean
+     */
     @Bean
     public JWTRequestFilter authenticationJwtTokenFilter() {
         return new JWTRequestFilter();
     }
 
+    /**
+     * Creates a bean for the BCryptPasswordEncoder.
+     *
+     * @return The BCryptPasswordEncoder bean
+     */
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * Configures the security filter chain.
+     *
+     * @param http The HttpSecurity object
+     * @return The configured SecurityFilterChain
+     * @throws Exception if an error occurs during configuration
+     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests().antMatchers("/auth/users/login", "/auth/users/register", "/api/resources","/api/specialists", "/api/resources/all").permitAll().antMatchers(
@@ -58,11 +75,23 @@ public class SecurityConfiguration {
         return http.build();
     }
 
+    /**
+     * Creates a bean for the AuthenticationManager.
+     *
+     * @param authConfig The AuthenticationConfiguration object
+     * @return The AuthenticationManager bean
+     * @throws Exception if an error occurs during configuration
+     */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
         return authConfig.getAuthenticationManager();
     }
 
+    /**
+     * Creates a bean for the DaoAuthenticationProvider.
+     *
+     * @return The DaoAuthenticationProvider bean
+     */
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
@@ -71,6 +100,11 @@ public class SecurityConfiguration {
         return authProvider;
     }
 
+    /**
+     * Creates a bean for MyUserDetails.
+     *
+     * @return The MyUserDetails bean
+     */
     @Bean
     @Scope(value = WebApplicationContext.SCOPE_REQUEST, proxyMode = ScopedProxyMode.TARGET_CLASS)
     public MyUserDetails myUserDetails() {
