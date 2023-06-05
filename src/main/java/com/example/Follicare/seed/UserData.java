@@ -2,6 +2,7 @@ package com.example.Follicare.seed;
 
 import com.example.Follicare.model.*;
 import com.example.Follicare.repository.*;
+import com.example.Follicare.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -15,8 +16,8 @@ public class UserData implements CommandLineRunner {
 //    @Autowired
 //    UserRepository userRepository;
 
-//    @Autowired
-//    UserService userService;
+    @Autowired
+    UserService userService;
 
     @Autowired
     ProfileRepository profileRepository;
@@ -37,22 +38,22 @@ public class UserData implements CommandLineRunner {
 
     private void loadUserData() {
 
-            // Seed data for initial setup
-//            User porsha = new User(1L, "PorshaW", "porshaw@gmail.com", "porsha1");
-//            User bob = new User(2L, "BoBWhit", "BobW@gmail.com", "bob2");
-//            User kandi = new User(3L, "Kandi1", "kandib@gmail.com", "excape4");
+//             Seed data for initial setup
+            User porsha = new User(1L, "PorshaW", "porshaw@gmail.com", "porsha1");
+            User bob = new User(2L, "BoBWhit", "BobW@gmail.com", "bob2");
+            User kandi = new User(3L, "Kandi1", "kandib@gmail.com", "excape4");
 
-//            userService.createUser(porsha);
-//            userService.createUser(bob);
-//            userService.createUser(kandi);
+            userService.createUser(porsha);
+            userService.createUser(bob);
+            userService.createUser(kandi);
 
             Profiles porshaProfile = new Profiles(1L, "Porsha", "Williams", "Traction Alopecia", "There are a few thin spots of hair along my hairline. I tend to wear my hair in tight ponytails.", "48205");
             Profiles bobProfile = new Profiles(2L, "Bob", "Whitfield", "Male Pattern Baldness", "My hairline has been reseeding as the years have gone by. My hair is thin and more fragile than usual.", "49505");
             Profiles kandiProfile = new Profiles(3L, "Kandi", "Burress", "Alopecia Areata", "I have a few bald spots throughout my head. They range from the size of dimes to the size of quarters.", "48205");
 
-//            porshaProfile.setUser(porsha);
-//            porshaProfile.setUser(bob);
-//            porshaProfile.setUser(kandi);
+            porshaProfile.setUser(porsha);
+            bobProfile.setUser(bob);
+            kandiProfile.setUser(kandi);
 
             Profiles porshaSavedProfile = profileRepository.save(porshaProfile);
             Profiles bobSavedProfile = profileRepository.save(bobProfile);

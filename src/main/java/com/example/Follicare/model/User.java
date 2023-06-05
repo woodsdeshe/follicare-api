@@ -28,6 +28,10 @@ public class User {
     @JsonIgnore
     private List<Specialist> listOfSpecialists;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private Profiles profiles;
+
     public User() {
     }
 

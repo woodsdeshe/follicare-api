@@ -2,9 +2,8 @@ package com.example.Follicare.service;
 
 import com.example.Follicare.exceptions.AlreadyExistsException;
 import com.example.Follicare.exceptions.NotFoundException;
-import com.example.Follicare.model.Favorites;
-import com.example.Follicare.model.Specialist;
-import com.example.Follicare.model.User;
+import com.example.Follicare.model.*;
+import com.example.Follicare.repository.ProfileRepository;
 import com.example.Follicare.repository.UserRepository;
 import com.example.Follicare.security.MyUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +23,9 @@ public class ProfilesService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private ProfileRepository profileRepository;
+
     private final PasswordEncoder passwordEncoder;
 
     // Purpose is to encrypt password when updating profile
@@ -31,21 +34,48 @@ public class ProfilesService {
         this.userRepository = userRepository;
     }
 
+    public void setProfileRepository(ProfileRepository profileRepository) {
+        this.profileRepository = profileRepository;
+    }
+
     /**
-     * Retrieves currently logged-in user's data. If there is no data (Example: After account deletion), an Unauthorized error message is
-     * thrown.
+     * Retrieves the profile details of the currently logged-in user.
      *
-     * @return Logged-in user's data
+     * @return Profile details of the logged-in user
      */
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public User getLoggedInUser() {
+    public UserProfileDTO getUserProfile() {
+        User loggedInUser = getLoggedInUserFromContext();
+        Optional<Profiles> userProfileOptional = profileRepository.findByUser(loggedInUser);
+
+        if (userProfileOptional.isPresent()) {
+            Profiles userProfile = userProfileOptional.get();
+            return new UserProfileDTO(
+                    loggedInUser.getUserName(),
+                    loggedInUser.getEmail(),
+                    userProfile.getFirstName(),
+                    userProfile.getLastName(),
+                    userProfile.getHairDisorder(),
+                    userProfile.getDisorderDescription(),
+                    userProfile.getZipCode()
+            );
+        } else {
+            throw new NotFoundException("Profile not found");
+        }
+    }
+
+
+    /**
+     * Retrieves the currently logged-in user from the security context.
+     *
+     * @return The logged-in user
+     */
+    private User getLoggedInUserFromContext() {
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        // Check that there is a logged-in user
+
         if (userDetails.getUser() == null || userDetails.getUsername().isEmpty() || userDetails.getUsername() == null) {
-            // Return an error if the user is not found
             throw new NotFoundException("User not found");
         }
-        // Return the data for the logged-in user
+
         return userDetails.getUser();
     }
 
@@ -56,29 +86,48 @@ public class ProfilesService {
      * @param updatedBody the incoming user data requesting to be updated
      * @return the logged-in user's data after the update
      */
-    public User updateMyProfile(User updatedBody) {
-        // Obtain the ID for the logged-in user
-        Optional<User> user = userRepository.findById(getLoggedInUser().getId());
-        // Check there is data for the logged-in user
-        if (user.isPresent()) {
-            // check that the email does not already in the database, and it's not the same as current email
-            if (userRepository.existsByEmail(updatedBody.getEmail()) && !user.get().getEmail().equals(updatedBody.getEmail())) {
+    public User updateMyProfile(User updatedBody, Profiles updatedProfile) {
+        Optional<User> userOptional = userRepository.findById(getLoggedInUserFromContext().getId());
+        Optional<Profiles> profileOptional = profileRepository.findByUser(userOptional);
+
+        if (userOptional.isPresent() && profileOptional.isPresent()) {
+            User user = userOptional.get();
+            Profiles profile = profileOptional.get();
+
+            if (userRepository.existsByEmail(updatedBody.getEmail()) && !user.getEmail().equals(updatedBody.getEmail())) {
                 throw new AlreadyExistsException("Email already in use");
             }
-            // Check that the password field is not empty when updating the password
+
             if (updatedBody.getPassword() != null && !updatedBody.getPassword().isEmpty()) {
-                user.get().setPassword(passwordEncoder.encode(updatedBody.getPassword()));
+                user.setPassword(passwordEncoder.encode(updatedBody.getPassword()));
             }
-            // Check that the name field is not empty when updating the name
             if (updatedBody.getUserName() != null && !updatedBody.getUserName().isEmpty()) {
-                user.get().setUserName(updatedBody.getUserName());
+                user.setUserName(updatedBody.getUserName());
             }
-            // Check that the email field is not empty when updating the email
             if (updatedBody.getEmail() != null && !updatedBody.getEmail().isEmpty()) {
-                user.get().setEmail(updatedBody.getEmail());
+                user.setEmail(updatedBody.getEmail());
             }
-            // Save the updated data for the logged-in user
-            return userRepository.save(user.get());
+            if (updatedProfile.getFirstName() != null && !updatedProfile.getFirstName().isEmpty()) {
+                profile.setFirstName(updatedProfile.getFirstName());
+            }
+            if (updatedProfile.getLastName() != null && !updatedProfile.getLastName().isEmpty()) {
+                profile.setLastName(updatedProfile.getLastName());
+            }
+            if (updatedProfile.getHairDisorder() != null && !updatedProfile.getHairDisorder().isEmpty()) {
+                profile.setHairDisorder(updatedProfile.getHairDisorder());
+            }
+            if (updatedProfile.getDisorderDescription() != null && !updatedProfile.getDisorderDescription().isEmpty()) {
+                profile.setDisorderDescription(updatedProfile.getDisorderDescription());
+            }
+            if (updatedProfile.getZipCode() != null && !updatedProfile.getZipCode().isEmpty()) {
+                profile.setZipCode(updatedProfile.getZipCode());
+            }
+
+            // Save both user and profile entities
+            userRepository.save(user);
+            profileRepository.save(profile);
+
+            return user;
         } else {
             return null;
         }
@@ -93,11 +142,11 @@ public class ProfilesService {
      */
     public User deleteMyProfile() {
         // Obtain the ID for the logged-in user
-        Optional<User> myProfile = userRepository.findById(getLoggedInUser().getId());
+        Optional<User> myProfile = userRepository.findById(getLoggedInUserFromContext().getId());
         // Check there is data for the logged-in user
         if (myProfile.isPresent()) {
             // Remove the logged-in user's data from the database by its ID
-            userRepository.deleteById(getLoggedInUser().getId());
+            userRepository.deleteById(getLoggedInUserFromContext().getId());
             // Return the information of the deleted user
             return myProfile.get();
         } else {
@@ -107,7 +156,7 @@ public class ProfilesService {
     }
 
     public List<Specialist> getSpecialistsInFavoritesList() {
-        Optional<User> userProfile = userRepository.findById(getLoggedInUser().getId());
+        Optional<User> userProfile = userRepository.findById(getLoggedInUserFromContext().getId());
 
         if (userProfile.isPresent()) {
             List<Specialist> listOfSpecialists = userProfile.get().getListOfSpecialists();

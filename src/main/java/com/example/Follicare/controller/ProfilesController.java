@@ -1,9 +1,12 @@
 package com.example.Follicare.controller;
 
+import com.example.Follicare.model.Profiles;
 import com.example.Follicare.model.Specialist;
 import com.example.Follicare.model.User;
+import com.example.Follicare.model.UserProfileDTO;
 import com.example.Follicare.service.ProfilesService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,16 +21,17 @@ public class ProfilesController {
     // Functionality: Returns logged-in user's details
     // Path: Path:  http://localhost:8080/api/profile
 
-    @GetMapping(path = "")
-    public User getMyProfile() {
-        return profilesService.getLoggedInUser();
+    @GetMapping("")
+    public ResponseEntity<UserProfileDTO> getUserProfile() {
+        UserProfileDTO userProfileDTO = profilesService.getUserProfile();
+        return ResponseEntity.ok(userProfileDTO);
     }
 
     // Functionality: Edit user's details
     // Path: Path:  http://localhost:8080/api/profile
     @PutMapping(path = "")
-    public User updatedProfileDetails(@RequestBody User updatedBody) {
-        return profilesService.updateMyProfile(updatedBody);
+    public User updatedProfileDetails(@RequestBody User updatedBody, Profiles updatedProfile) {
+        return profilesService.updateMyProfile(updatedBody, updatedProfile);
     }
 
     // Functionality: Delete logged-in user's account
