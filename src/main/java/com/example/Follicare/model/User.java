@@ -24,9 +24,6 @@ public class User {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
-    @ManyToMany(mappedBy = "specialistList")
-    @JsonIgnore
-    private List<Specialist> listOfSpecialists;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
@@ -44,14 +41,6 @@ public class User {
 
     public Long getId() {
         return id;
-    }
-
-    public List<Specialist> getListOfSpecialists() {
-        return listOfSpecialists;
-    }
-
-    public void setListOfSpecialists(List<Specialist> listOfSpecialists) {
-        this.listOfSpecialists = listOfSpecialists;
     }
 
     public void setId(Long id) {

@@ -5,58 +5,37 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "specialist")
+@Table(name = "specialists")
 public class Specialist {
-
-    @Column
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
-    @Column
+    @Column(name = "first_name")
     private String firstName;
 
-    @Column
+    @Column(name = "last_name")
     private String lastName;
 
-    @Column
+    @Column(name = "specialty")
     private String specialty;
 
-    @Column
+    @Column(name = "zip_code")
     private String zipCode;
 
-    @Column
+    @Column(name = "email")
     private String email;
 
-    @Column
+    @Column(name = "phone_number")
     private String phoneNumber;
 
-    @ManyToOne
-    @JoinColumn(name = "favorites_id")
-    private Favorites favorites;
-
-    @ManyToMany
-    @JoinTable(name = "user_specialists", joinColumns = @JoinColumn(name = "specialist_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private List<User> specialistList;
-
-    public List<User> getSpecialistList() {
-        return specialistList;
-    }
-
-    public void setSpecialistList(List<User> specialistList) {
-        this.specialistList = specialistList;
-    }
-
-    public Favorites getFavorites() {
-        return favorites;
-    }
-
-    public void setFavorites(Favorites favorites) {
-        this.favorites = favorites;
-    }
+    @ManyToMany(mappedBy = "favorites")
+    private List<Profiles> profiles;
 
     public Specialist() {
     }
@@ -127,7 +106,13 @@ public class Specialist {
         this.phoneNumber = phoneNumber;
     }
 
+    public List<Profiles> getProfiles() {
+        return profiles;
+    }
 
+    public void setProfiles(List<Profiles> profiles) {
+        this.profiles = profiles;
+    }
 
     @Override
     public String toString() {
@@ -136,7 +121,7 @@ public class Specialist {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", specialty='" + specialty + '\'' +
-                ", zipCode=" + zipCode +
+                ", zipCode='" + zipCode + '\'' +
                 ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 '}';

@@ -43,9 +43,9 @@ public class ProfilesController {
 
     // Functionality: Returns a list of specialists in a users' favorites list
     // Path: Path:  http://localhost:8080/api/profile/favorites
-    @GetMapping(path = "/favorites")
-    public List<Specialist> getAllSpecialistsInFavorites() {
-        return profilesService.getSpecialistInFavorites();
+    @GetMapping(path = "/favorites/{profileId}")
+    public List<Specialist> getAllSpecialistsInFavorites(@PathVariable Long profileId) {
+        return profilesService.getSpecialistsInFavorites(profileId);
     }
 
 }

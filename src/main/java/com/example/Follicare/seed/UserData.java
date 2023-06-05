@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,8 +23,8 @@ public class UserData implements CommandLineRunner {
     @Autowired
     ProfileRepository profileRepository;
 
-    @Autowired
-    FavoritesRepository favoritesRepository;
+//    @Autowired
+//    FavoritesRepository favoritesRepository;
 
     @Autowired
     SpecialistRepository specialistRepository;
@@ -61,19 +62,24 @@ public class UserData implements CommandLineRunner {
 
 
             // Seed data for initial setup
-            Specialist specialist1 = new Specialist(1L, "Brandy", "Singer", "Alopecia Areata, Dermatology", "49505", "brandy@gmail.com", "123-456-7809");
-            Specialist specialist2 = new Specialist(2L, "Byron", "Test", "Alopecia Areata, Trichology", "49502", "byron@gmail.com", "987-654-3120");
+            Specialist specialist1 = new Specialist(1L, "Brandy", "Singer", "Alopecia Areata", "49505", "brandy@gmail.com", "123-456-7809");
+            specialistRepository.save(specialist1);
+            Specialist specialist2 = new Specialist(2L, "Byron", "Test", "Alopecia Areata", "49502", "byron@gmail.com", "987-654-3120");
+            specialistRepository.save(specialist2);
             Specialist specialist3 = new Specialist(3L, "Darius", "Lewis", "Male Pattern Baldness", "48205", "darius@gmail.com", "394-294-6740");
+            specialistRepository.save(specialist3);
 
-            specialistRepository.saveAll(Arrays.asList(specialist1, specialist2, specialist3));
 
-            Favorites porshaFavorites = new Favorites(specialist1.getId());
-            Favorites kandiFavorites = new Favorites(specialist3.getId());
-
-            porshaFavorites.setProfile(porshaSavedProfile);
-            kandiFavorites.setProfile(kandiSavedProfile);
-
-            favoritesRepository.saveAll(Arrays.asList(porshaFavorites, kandiFavorites));
+//        // Create the favorites list
+//        List<Specialist> porshaFavoritesList = new ArrayList<>();
+//        porshaFavoritesList.add(specialist1);
+//        porshaFavoritesList.add(specialist2);
+//
+//        // Set the favorites list in Porsha's profile
+//        porshaProfile.setFavorites(porshaFavoritesList);
+//
+//        // Save the updated profile
+//        profileRepository.save(porshaProfile);
 
 
         Resources resource1 = new Resources();
@@ -93,6 +99,5 @@ public class UserData implements CommandLineRunner {
         resource3.setAuthor("Alopecia Support Group");
         resource3.setDescription("Real-life stories and support for individuals living with alopecia.");
         resourcesRepository.save(resource3);
-
         }
 }

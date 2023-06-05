@@ -37,17 +37,21 @@ public class Profiles {
     @JsonIgnoreProperties("hibernateLazyInitializer")
     private User user;
 
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "Favorites",
+            joinColumns = @JoinColumn(name = "profile_id"),
+            inverseJoinColumns = @JoinColumn(name = "specialist_id")
+    )
+    private List<Specialist> favorites;
 
-    @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Favorites> favoritesList;
 
-
-    public List<Favorites> getFavoritesList() {
-        return favoritesList;
+    public List<Specialist> getFavorites() {
+        return favorites;
     }
 
-    public void setFavoritesList(List<Favorites> favoritesList) {
-        this.favoritesList = favoritesList;
+    public void setFavorites(List<Specialist> favorites) {
+        this.favorites = favorites;
     }
 
     public User getUser() {
