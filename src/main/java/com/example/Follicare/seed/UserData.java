@@ -40,9 +40,9 @@ public class UserData implements CommandLineRunner {
      * Loads seed data into the database.
      */
     private void loadUserData() {
-            User porsha = new User(1L, "PorshaW", "porshaw@gmail.com", "porsha1");
-            User bob = new User(2L, "BoBWhit", "BobW@gmail.com", "bob2");
-            User kandi = new User(3L, "Kandi1", "kandib@gmail.com", "excape4");
+            User porsha = new User(1L, "porshaw@gmail.com", "porsha1");
+            User bob = new User(2L, "BobW@gmail.com", "bob2");
+            User kandi = new User(3L, "kandib@gmail.com", "excape4");
 
             userService.createUser(porsha);
             userService.createUser(bob);

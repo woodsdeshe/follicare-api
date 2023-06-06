@@ -59,9 +59,6 @@ public class UserService {
      * @return the data for the newly registered user
      */
     public User createUser(User userObject) {
-        if (Objects.equals(userObject.getUserName(), "") || userObject.getUserName() == null) {
-            throw new BadRequestException("User name is required");
-        }
         if (Objects.equals(userObject.getEmail(), "") || userObject.getEmail() == null) {
             throw new BadRequestException("User email is required");
         }

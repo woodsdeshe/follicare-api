@@ -49,7 +49,6 @@ public class ProfilesService {
         if (userProfileOptional.isPresent()) {
             Profiles userProfile = userProfileOptional.get();
             return new UserProfileDTO(
-                    loggedInUser.getUserName(),
                     loggedInUser.getEmail(),
                     userProfile.getFirstName(),
                     userProfile.getLastName(),
