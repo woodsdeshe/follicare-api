@@ -28,7 +28,6 @@ public class JWTRequestFilter extends OncePerRequestFilter {
     @Autowired
     private JWTUtils jwtUtils;
 
-    private String jwtToken;
 
     /**
      * parseJwt authenticates the json web token.
@@ -44,10 +43,6 @@ public class JWTRequestFilter extends OncePerRequestFilter {
         return null;
     }
 
-    public String getJwtToken() {
-        return jwtToken;
-    }
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
@@ -55,7 +50,7 @@ public class JWTRequestFilter extends OncePerRequestFilter {
             // check if the jwt key is valid and not null
             if (jwt != null && jwtUtils.validateJwtToken(jwt)) { // .validateJwtToken is the method we made earlier in the JWTUtils class
                 //Store the JWT token in the class variable
-                jwtToken = jwt;
+
                 // grab email address from jwt payload
                 // if valid get user email from the key
                 String username = jwtUtils.getUserNameFromJwtToken(jwt);
