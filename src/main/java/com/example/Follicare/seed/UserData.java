@@ -67,6 +67,26 @@ public class UserData implements CommandLineRunner {
             specialistRepository.save(specialist2);
             Specialist specialist3 = new Specialist(3L, "Darius", "Lewis", "Male Pattern Baldness", "48205", "darius@gmail.com", "394-294-6740");
             specialistRepository.save(specialist3);
+            Specialist specialist4 = new Specialist(4L, "Emma Thompson", "Dermatologist", "Alopecia Areata", "49503", "emma.thompson@gmail.com", "555-123-4567");
+            specialistRepository.save(specialist4);
+            Specialist specialist5 = new Specialist(5L, "Mohammed Ali", "Trichologist", "Male Pattern Baldness", "49501", "mohammed.ali@gmail.com", "777-888-9999");
+            specialistRepository.save(specialist5);
+
+            Specialist specialist6 = new Specialist(6L, "Sophia Nguyen", "Endocrinologist", "Female Pattern Baldness", "49504", "sophia.nguyen@gmail.com", "222-333-4444");
+            specialistRepository.save(specialist6);
+
+            Specialist specialist7 = new Specialist(7L, "Muhammad Khan", "Hair Transplant Surgeon", "Androgenetic Alopecia", "48201", "muhammad.khan@gmail.com", "888-999-1111");
+            specialistRepository.save(specialist7);
+
+            Specialist specialist8 = new Specialist(8L, "Ava Patel", "Cosmetologist", "Telogen Effluvium", "48203", "ava.patel@gmail.com", "444-555-6666");
+            specialistRepository.save(specialist8);
+
+            Specialist specialist9 = new Specialist(9L, "Noah García", "Psychologist", "Trichotillomania", "48204", "noah.garcia@gmail.com", "666-777-8888");
+            specialistRepository.save(specialist9);
+
+            Specialist specialist10 = new Specialist(10L, "Mia Kim", "Dermatologist", "Scarring Alopecia", "48202", "mia.kim@gmail.com", "111-222-3333");
+            specialistRepository.save(specialist10);
+
 
 
 
@@ -109,5 +129,78 @@ public class UserData implements CommandLineRunner {
         resource3.setAuthor("Alopecia Support Group");
         resource3.setDescription("Real-life stories and support for individuals living with alopecia.");
         resourcesRepository.save(resource3);
-        }
+        Resources resource4 = new Resources();
+        resource4.setTitle("Hair Loss and Self-Esteem: Building Confidence");
+        resource4.setAuthor("Dr. Maria Hernandez");
+        resource4.setDescription("Exploring the impact of hair loss on self-esteem and strategies to build confidence.");
+        resourcesRepository.save(resource4);
+
+        Resources resource5 = new Resources();
+        resource5.setTitle("Hair Loss Prevention: Tips for Healthy Hair");
+        resource5.setAuthor("Healthy Living Magazine");
+        resource5.setDescription("Practical tips for preventing hair loss and maintaining healthy hair.");
+        resourcesRepository.save(resource5);
+
+        Resources resource6 = new Resources();
+        resource6.setTitle("Wigs and Hairpieces: Finding the Perfect Fit");
+        resource6.setAuthor("Wig Experts Online");
+        resource6.setDescription("A guide to choosing and wearing wigs and hairpieces with confidence.");
+        resourcesRepository.save(resource6);
+
+        Resources resource7 = new Resources();
+        resource7.setTitle("Nutrition and Hair Health: Essential Vitamins and Minerals");
+        resource7.setAuthor("Dr. Emily Wilson");
+        resource7.setDescription("Discover the role of nutrition in promoting healthy hair and the essential vitamins and minerals for hair health.");
+        resourcesRepository.save(resource7);
+
+        Resources resource8 = new Resources();
+        resource8.setTitle("Stress and Hair Loss: Managing the Connection");
+        resource8.setAuthor("Mindfulness Institute");
+        resource8.setDescription("Exploring the link between stress and hair loss and techniques for managing stress effectively.");
+        resourcesRepository.save(resource8);
+
+        Resources resource9 = new Resources();
+        resource9.setTitle("Hair Loss in Women: Causes and Treatment Options");
+        resource9.setAuthor("Dr. Amanda Johnson");
+        resource9.setDescription("A comprehensive guide on the causes and treatment options for hair loss in women.");
+        resourcesRepository.save(resource9);
+
+        Resources resource10 = new Resources();
+        resource10.setTitle("Hair Transplant Surgery: What You Need to Know");
+        resource10.setAuthor("Hair Restoration Clinic");
+        resource10.setDescription("An informative overview of hair transplant surgery, including the procedure, recovery, and potential results.");
+        resourcesRepository.save(resource10);
+
+        Resources resource11 = new Resources();
+        resource11.setTitle("Caring for Ethnic Hair: Tips and Advice");
+        resource11.setAuthor("Natural Hair Enthusiast");
+        resource11.setDescription("Specific tips and advice for maintaining and styling ethnic hair.");
+        resourcesRepository.save(resource11);
+
+        Resources resource12 = new Resources();
+        resource12.setTitle("Hair Loss in African Americans: Causes and Treatment Options");
+        resource12.setAuthor("Dr. Jasmine Thompson");
+        resource12.setDescription("A comprehensive guide on the causes and treatment options for hair loss in African Americans.");
+        resourcesRepository.save(resource12);
+
+        Resources resource13 = new Resources();
+        resource13.setTitle("The Beauty of Natural Hair: Embracing Your Roots");
+        resource13.setAuthor("Curly Hair Community");
+        resource13.setDescription("Celebrating the beauty and versatility of natural hair and providing support for individuals with natural hair textures.");
+        resourcesRepository.save(resource13);
+
+        Resources resource14 = new Resources();
+        resource14.setTitle("Hair Care for Latinx Community: Embracing Cultural Hair Traditions");
+        resource14.setAuthor("Hispanic Hair Experts");
+        resource14.setDescription("A guide to hair care practices and products that honor Latinx cultural hair traditions.");
+        resourcesRepository.save(resource14);
+
+        Resources resource15 = new Resources();
+        resource15.setTitle("Hair Loss in Asian Population: Understanding Unique Challenges");
+        resource15.setAuthor("Dr. Wei Chen");
+        resource15.setDescription("An in-depth exploration of hair loss patterns and treatment considerations for the Asian population.");
+        resourcesRepository.save(resource15);
+
+
+    }
 }
