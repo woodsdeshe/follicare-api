@@ -61,11 +61,11 @@ public class UserData implements CommandLineRunner {
             profileRepository.save(kandiProfile);
 
 
-            Specialist specialist1 = new Specialist(1L, "Brandy", "Singer", "Alopecia Areata", "49505", "brandy@gmail.com", "123-456-7809");
+            Specialist specialist1 = new Specialist(1L, "Brandy Singer", "Dermatologist", "Alopecia Areata", "49505", "brandy@gmail.com", "123-456-7809");
             specialistRepository.save(specialist1);
-            Specialist specialist2 = new Specialist(2L, "Byron", "Test", "Alopecia Areata", "49502", "byron@gmail.com", "987-654-3120");
+            Specialist specialist2 = new Specialist(2L, "Byron Calloway", "Dermatologist", "Alopecia Areata", "49502", "byron@gmail.com", "987-654-3120");
             specialistRepository.save(specialist2);
-            Specialist specialist3 = new Specialist(3L, "Darius", "Lewis", "Male Pattern Baldness", "48205", "darius@gmail.com", "394-294-6740");
+            Specialist specialist3 = new Specialist(3L, "Darius Lewis", "Trichologist", "Male Pattern Baldness", "48205", "darius@gmail.com", "394-294-6740");
             specialistRepository.save(specialist3);
             Specialist specialist4 = new Specialist(4L, "Emma Thompson", "Dermatologist", "Alopecia Areata", "49503", "emma.thompson@gmail.com", "555-123-4567");
             specialistRepository.save(specialist4);

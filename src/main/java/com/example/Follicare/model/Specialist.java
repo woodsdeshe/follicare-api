@@ -1,11 +1,6 @@
 package com.example.Follicare.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,10 +12,10 @@ public class Specialist {
     private Long id;
 
     @Column(name = "first_name")
-    private String firstName;
+    private String fullName;
 
     @Column(name = "last_name")
-    private String lastName;
+    private String title;
 
     @Column(name = "specialty")
     private String specialty;
@@ -44,10 +39,10 @@ public class Specialist {
     public Specialist() {
     }
 
-    public Specialist(Long id, String firstName, String lastName, String specialty, String zipCode, String email, String phoneNumber) {
+    public Specialist(Long id, String fullName, String title, String specialty, String zipCode, String email, String phoneNumber) {
         this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.fullName = fullName;
+        this.title = title;
         this.specialty = specialty;
         this.zipCode = zipCode;
         this.email = email;
@@ -62,20 +57,20 @@ public class Specialist {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setFullName(String firstName) {
+        this.fullName = firstName;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getTitle() {
+        return title;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setTitle(String lastName) {
+        this.title = lastName;
     }
 
     public String getSpecialty() {
@@ -122,8 +117,8 @@ public class Specialist {
     public String toString() {
         return "Specialist{" +
                 "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", title='" + title + '\'' +
                 ", specialty='" + specialty + '\'' +
                 ", zipCode='" + zipCode + '\'' +
                 ", email='" + email + '\'' +
