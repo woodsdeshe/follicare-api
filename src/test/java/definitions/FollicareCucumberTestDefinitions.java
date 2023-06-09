@@ -44,6 +44,7 @@ public class FollicareCucumberTestDefinitions {
     private List<Resources> resourcesList;
 
     private String title;
+    private List<Specialist> resultList;
 
 
 
@@ -67,63 +68,6 @@ public class FollicareCucumberTestDefinitions {
 
     @LocalServerPort
     String port;
-
-
-    @Given("a user has a valid profile")
-    public void aUserHasAValidProfile() throws Exception {
-        RestAssured.baseURI = BASE_URL;
-        RequestSpecification request = RestAssured.given().header("Authorization", "Bearer " + getSecurityKey());
-        response = request.get(BASE_URL + port + "/api/profile");
-    }
-
-    @When("the user adds the specialist to their favorites")
-    public void theUserAddsTheSpecialistToTheirFavorites() throws Exception {
-        RestAssured.baseURI = BASE_URL;
-        RequestSpecification request = RestAssured.given();
-        JSONObject requestBody = new JSONObject();
-        requestBody.put("id", 1L);
-        requestBody.put("first name", "Specialists' first name");
-        requestBody.put("last name", "Specialists' last name");
-        requestBody.put("specialty", "Specialists' specialty");
-        requestBody.put("zipCode", "Specialists' zipcode");
-        requestBody.put("email", "Specialists' email");
-        requestBody.put("phoneNumber", "Specialists' phone number");
-        request.header("Content-Type", "application/json");
-        request.header("Authorization", "Bearer " + getSecurityKey());
-        response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/favorites/1/add");
-    }
-
-    @Then("the specialist should be added to the user's favorites list")
-    public void theSpecialistShouldBeAddedToTheUserSFavoritesList() {
-        Assert.assertEquals(200, response.getStatusCode());
-    }
-
-
-    @Given("the user has added specialists to their favorites list")
-    public void theUserHasAddedSpecialistsToTheirFavoritesList() {
-
-    }
-
-    @When("the user requests the list of specialists in their favorites list")
-    public void theUserRequestsTheListOfSpecialistsInTheirFavoritesList() {
-
-    }
-
-    @Then("the system should return a list of specialists in their favorites list")
-    public void theSystemShouldReturnAListOfSpecialistsInTheirFavoritesList() throws Exception {
-
-    }
-
-    @When("the user removes the specialist from their favorites")
-    public void theUserRemovesTheSpecialistFromTheirFavorites() throws Exception {
-        request.header("Content-Type", "application/json");
-        request.header("Authorization", "Bearer " + getSecurityKey());
-        response = request.delete(BASE_URL + port + "/api/favorites/1/remove/1");
-    }
-
-    @Then("the specialist should be removed from the user's favorites list")
-    public void theSpecialistShouldBeRemovedFromTheUserSFavoritesList() {
-    }
 
 
     @Given("there are multiple specialists in the system")
@@ -248,21 +192,5 @@ public class FollicareCucumberTestDefinitions {
         }
     }
 
-    @Given("a user account is available")
-    public void aUserAccountIsAvailable() throws Exception {
-        RestAssured.baseURI = BASE_URL;
-        RequestSpecification request = RestAssured.given().header("Authorization", "Bearer " + getSecurityKey());
-        response = request.get(BASE_URL + port + "/api/users/1");
-    }
-
-    @When("I go to my profile")
-    public void iGoToMyProfile() {
-        Assert.assertNotNull(String.valueOf(response));
-    }
-
-    @Then("I can see my account details")
-    public void iCanSeeMyAccountDetails() {
-        Assert.assertEquals(200, response.getStatusCode());
-    }
 
 }

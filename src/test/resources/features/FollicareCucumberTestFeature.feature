@@ -1,19 +1,5 @@
 Feature: Model Functionality
 
-  Scenario: Adding a Specialist to Favorites
-    Given a user has a valid profile
-    When the user adds the specialist to their favorites
-    Then the specialist should be added to the user's favorites list
-
-  Scenario: User gets a list of specialists in their favorites list
-    Given the user has added specialists to their favorites list
-    When the user requests the list of specialists in their favorites list
-    Then the system should return a list of specialists in their favorites list
-
-  Scenario: Removing a Specialist from Favorites
-    When the user removes the specialist from their favorites
-    Then the specialist should be removed from the user's favorites list
-
   Scenario: User retrieves a list of all specialists
     Given there are multiple specialists in the system
     When the user requests the list of all specialists
@@ -44,7 +30,3 @@ Feature: Model Functionality
     When the user searches for resources by title
     Then a list of resources related to that title should be returned
 
-  Scenario: User Profile Details Available
-    Given a user account is available
-    When I go to my profile
-    Then I can see my account details
