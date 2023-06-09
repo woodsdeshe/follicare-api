@@ -55,12 +55,42 @@ The wireframes for Follicare can be accessed [here](https://github.com/woodsdesh
 ## Planning Documentation
 The detailed scope, schedule, and deliverables breakdown of the project can be found in the [GitHub Project](link-to-GitHub-project).
 
-## Installation Instructions for Dependencies
-To install and set up the dependencies required for the project, follow these instructions:
-1. [Dependency 1]: [Installation instructions]
-2. [Dependency 2]: [Installation instructions]
-3. [Dependency 3]: [Installation instructions]
-...
+# Installation Instructions
+- Use the following links provided below to access the Maven Central repository.
+
+<details>
+<summary>List of Dependencies Used</summary>
+
+- [h2](https://mvnrepository.com/artifact/com.h2database/h2)
+- [spring-boot-starter-data-rest](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-rest)
+- [spring-boot-devtools](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools)
+- [spring-boot-starter-jdbc](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-jdbc)
+- [spring-boot-starter-test](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test)
+- [spring-boot-starter-data-jpa](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa)
+- [spring-boot-starter-security](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security)
+- [spring-boot-starter-validation](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation/3.0.6)
+- [junit](https://mvnrepository.com/artifact/junit/junit)
+- [cucumber-java](https://mvnrepository.com/artifact/io.cucumber/cucumber-java)
+- [cucumber-junit](https://mvnrepository.com/artifact/io.cucumber/cucumber-junit)
+- [cucumber-spring](https://mvnrepository.com/artifact/io.cucumber/cucumber-spring)
+- [rest-assured](https://mvnrepository.com/artifact/io.rest-assured/rest-assured/4.3.0)
+- [jjwt-api](https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api/0.11.5)
+- [jjwt-impl](https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-impl/0.11.5)
+- [jjwt-jackson](https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-jackson/0.11.5)
+
+</details>
+
+- Copy and paste the dependencies into the pom.xml file within `<dependencies>`.
+
+![](https://i.postimg.cc/fWG4ZDz0/Screenshot-22.png)
+
+![](https://i.postimg.cc/mkmVWQsY/Screenshot-31.png)
+
+- Refresh the Maven project and the dependencies should be added to your project
+
+![](https://i.postimg.cc/BbSNzmdZ/Screenshot-30.png)
+
+---
 
 ## API Endpoints
 The following REST API endpoints are available in Follicare:
@@ -80,10 +110,6 @@ Sure! Here are the API endpoints in a table format:
 | GET          | /specialists?hairDisorder={hairDisorder}&zipcode={zipcode} | User retrieves a list of specialists based on their specialty and zipcode               | Public  |
 | GET          | /resources/all                               | User retrieves a list of all topics                                                                | Public  |
 | GET          | /resources?partialTitle={partialTitle}       | User retrieves a list of topics based on the partial topic title                                  | Public  |
-
-Please note that the access level specifies whether the endpoint is public (accessible to all) or private (requires authentication).
-
-Please refer to the API documentation for detailed information on request types and functionality.
 
 ## Future Features
 Follicare aims to incorporate the following features in the future:
